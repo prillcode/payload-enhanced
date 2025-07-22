@@ -1,0 +1,195 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Custom base styles for nature theme */
+@layer base {
+  :root {
+    --color-primary: theme('colors.forest.500');
+    --color-secondary: theme('colors.earth.500');
+    --color-accent: theme('colors.sunset.500');
+    --font-mono: 'Roboto Mono', monospace;
+  }
+  
+  * {
+    box-sizing: border-box;
+  }
+  
+  html {
+    font-size: 18px;
+    line-height: 32px;
+    -webkit-font-smoothing: antialiased;
+    
+    @media (max-width: 1024px) {
+      font-size: 15px;
+      line-height: 24px;
+    }
+  }
+  
+  html,
+  body,
+  #app {
+    height: 100%;
+  }
+  
+  body {
+    @apply text-earth-800 bg-white;
+    font-family: system-ui;
+    font-size: 18px;
+    line-height: 32px;
+    margin: 0;
+    
+    @media (max-width: 1024px) {
+      font-size: 15px;
+      line-height: 24px;
+    }
+  }
+  
+  img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+  }
+  
+  h1 {
+    margin: 40px 0;
+    font-size: 64px;
+    line-height: 70px;
+    font-weight: bold;
+    
+    @media (max-width: 1024px) {
+      margin: 24px 0;
+      font-size: 42px;
+      line-height: 42px;
+    }
+    
+    @media (max-width: 768px) {
+      font-size: 38px;
+      line-height: 38px;
+    }
+    
+    @media (max-width: 400px) {
+      font-size: 32px;
+      line-height: 32px;
+    }
+  }
+  
+  p {
+    margin: 24px 0;
+    
+    @media (max-width: 1024px) {
+      margin: calc(24px * 0.75) 0;
+    }
+  }
+  
+  a {
+    color: currentColor;
+    
+    &:focus {
+      opacity: 0.8;
+      outline: none;
+    }
+    
+    &:active {
+      opacity: 0.7;
+      outline: none;
+    }
+  }
+  
+  svg {
+    vertical-align: middle;
+  }
+}
+
+/* Custom component classes */
+@layer components {
+  .btn-primary {
+    @apply bg-forest-500 hover:bg-forest-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+  
+  .btn-secondary {
+    @apply bg-earth-500 hover:bg-earth-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+  
+  .btn-accent {
+    @apply bg-sunset-500 hover:bg-sunset-600 text-white font-medium py-2 px-4 rounded-lg transition-colors;
+  }
+  
+  .card {
+    @apply bg-white rounded-lg shadow-md overflow-hidden border border-earth-100;
+  }
+  
+  .section-bg {
+    @apply bg-gradient-to-br from-forest-50 to-earth-50;
+  }
+  
+  /* Payload-style layout patterns (adapted for nature theme) */
+  .page-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    min-height: 100vh;
+    padding: 45px;
+    max-width: 1024px;
+    margin: 0 auto;
+    
+    @media (max-width: 400px) {
+      padding: 24px;
+    }
+  }
+  
+  .page-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    flex-grow: 1;
+    
+    h1 {
+      text-align: center;
+    }
+  }
+  
+  .link-group {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    
+    a {
+      text-decoration: none;
+      padding: 0.25rem 0.5rem;
+      border-radius: 4px;
+      transition: all 0.2s ease;
+    }
+    
+    .admin-link {
+      @apply bg-earth-600 text-white border border-earth-700 hover:bg-earth-700;
+    }
+    
+    .docs-link {
+      @apply bg-transparent text-forest-700 border border-forest-300 hover:bg-forest-50;
+    }
+  }
+  
+  .page-footer {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    
+    @media (max-width: 1024px) {
+      flex-direction: column;
+      gap: 6px;
+    }
+    
+    p {
+      margin: 0;
+    }
+    
+    .code-link {
+      text-decoration: none;
+      padding: 0 0.5rem;
+      @apply bg-earth-200 text-earth-800 rounded;
+    }
+  }
+}

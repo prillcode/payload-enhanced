@@ -1,0 +1,240 @@
+# Payload CMS Template - Outdoors Theme
+
+**Powered by React, NextJS, and Payload CMS** this template is an outdoor-themed website for vacation destinations with lodging/accomodations.
+
+## 💼 Need Customization?
+
+If you get stuck or just want someone to do all of the work for you, let me customize and deploy this template as your business website!  
+<a href="https://apdev.pro" target="_blank" rel="noopener noreferrer">Who am I? Visit apdev.pro to learn more.</a>
+
+<a href="https://github.com/prillcode/payload-outdoors-template/issues/new?title=Interested%20in%20this%20Theme&body=Hi!%20Help%20me%20to%20customize%20this%20template%20for%20my%20business.%0A%0A**About%20my%20business:**%0A%0A**What%20I'm%20looking%20for:**%0A%0A**Timeline:**%0A%0A**Budget%20range:**%0A%0A**Contact%20info:**" target="_blank" rel="noopener noreferrer">
+<img src="https://img.shields.io/badge/💼%20Hire%20Me-Customize%20This%20Template-blue?style=for-the-badge" alt="Hire Me to Customize this Template for your Business">
+</a>
+
+## ✨ What You Get with this Theme 
+
+- **Nature/Outdoor Adventure Design**: Custom color palette with forest and earth tones, designed specifically for outdoor destinations and adventure tourism
+- **Fully Responsive Layout**: Mobile-first design with responsive header navigation, collapsible mobile menu, and optimized layouts for all screen sizes
+- **Dynamic Hero Sections**: Customizable hero components with gradient backgrounds, call-to-action buttons, and flexible content layouts
+- **Content Management**: Complete Payload CMS integration for managing accommodations, activities, and custom pages without code changes
+- **Custom Page Builder**: Rich content editor powered by Lexical that allows creation of flexible page layouts with multiple section types (full-width, two-column, centered)
+- **SEO Optimized**: Built-in SEO fields for meta titles, descriptions, and keywords on all content types, plus automatic OpenGraph support
+- **Dynamic Routing**: Automatic page generation for accommodations (`/accommodations/[slug]`), activities (`/activities/[slug]`), and custom pages (`/pages/[slug]`)
+- **Admin Panel Access**: Easy access to Payload CMS admin interface via footer link for content management
+- **Sample Data Included**: Pre-built sample accommodations, activities, and pages to get started quickly
+- **TypeScript Ready**: Full TypeScript support with auto-generated types for type-safe development
+- **Database Flexibility**: SQLite for local development, easily configurable for PostgreSQL or MySQL in production
+
+### Theme File Organization
+
+```
+src/app/
+├── (frontend)/
+│   ├── _components/
+│   │   ├── Hero.tsx
+│   │   ├── Header.tsx
+│   │   └── Footer.tsx
+│   ├── activities/
+│   │   └── page.tsx         # /activities route (list of Activities)
+|   |   └── [slug]/
+|   │       └── page.tsx     # /activities/[slug] route (single Activity)
+│   ├── accomodations/
+│   │   └── page.tsx         # /accomodations route (list of Accommodations)
+|   |   └── [slug]/
+|   │       └── page.tsx     # /accomodations/[slug] route (single Accommodation)
+│   ├── pages/
+|   |   └── [slug]/
+|   │       └── page.tsx     # /pages/[slug] route (dynamically renders /about, /contact, etc)
+│   ├── layout.tsx           # Frontend layout with Header/Footer
+│   └── page.tsx             # Homepage
+└── ...
+
+public/
+└── images/
+    ├── placeholder-hero.jpg
+    └── placeholder-activities-hero.jpg
+```
+
+
+## 🚀 Quick Start - Local Setup
+
+### Clone Repo or Use this Template
+
+You'll want to have standalone copy of this repo on your machine. You can either Clone the repo or Use this Template (recommended):
+
+**Option 1: Use this Template (Recommended)**
+1. Click the green **Use this template** button at the top of this repository
+2. Select **Create a new repository**
+3. Choose your repository name and settings
+4. Clone your new repository to your machine
+
+**Option 2: Clone this Repository**
+1. Clone this repository directly: `git clone [repo-url]`
+2. Note: This maintains connection to the original repo's git history
+
+### Front-end Development
+
+1. Once you have the repo on your machine, follow the steps below.
+2. `cd my-project && cp .env.example .env` to copy the example environment variables. For local development, you will use SQLite which requires no additional database setup.
+
+3. `pnpm install && pnpm dev` to install dependencies and start the dev server
+4. open `http://localhost:3000` to open the app in your browser
+
+That's it! Changes made in `./src` will be reflected in your app. 
+
+### Back-end CMS
+
+Navigate to `https://localhost/admin` to access the Payload Admin panel and follow the on-screen instructions to login and create your first admin user. Then check out [Payload CMS](#payload-cms) below once you're ready to build and serve your app, and the Deployment sections when you're ready to go live.
+
+## 📚 Extended Walkthrough
+
+**SQLite for Local Development**: By default, this template is configured to use SQLite for local development, which creates a local database file and requires no additional setup. This makes it perfect for getting started quickly without needing to configure a separate database server.
+
+### Payload CMS
+
+1. When you run the dev server with `pnpm dev`, Payload reads your configuration from `src/payload.config.ts`, which defines:
+   - Database connection (SQLite for local development)
+   - Default Collections (Payload defaults): Users, Media
+   - Custom Collections (added by this Template): Accommodations, Activities, and Pages
+   - Admin UI settings
+   - Access control
+
+2. Each collection is defined in its own TypeScript file in the `/collections` directory:
+   - `Users.ts` - Payload default > Admin users who can log into the system
+   - `Media.ts` - Payload default > Images and other uploaded files
+   - `Accommodations.ts` - Custom with this theme > Accommodations/Lodging to list and feature on your site
+   - `Activities.ts` - Custom with this theme > Activities/Experiences to list and feature on your site
+   - `Pages.ts` - Custom with this theme > Create custom Pages with rich content w/o coding (About, Contact, Featured, etc.)
+
+   The **Pages collection** allows you to create custom pages with:
+   - Hero sections with customizable titles, descriptions, and gradients
+   - Rich text content using Lexical editor with headings, paragraphs, and formatting
+   - Additional sections with flexible layouts (full-width, two-column, centered)
+   - SEO fields for meta titles, descriptions, and keywords
+   - URL-friendly slugs for routing (e.g., `/pages/about`, `/pages/contact`)
+   
+   Pages are automatically accessible at `/pages/[slug]` on your site once published, making it easy to add custom content like company information, contact details, or any other static pages your site needs.
+
+3. Accessing the CMS Admin Panel:
+   - Once your dev server is running, go to `http://localhost:3000/admin`
+   - On first run, you'll be prompted to create an admin user
+   - Follow the on-screen instructions to set up your credentials
+
+4. Creating Initial Content:
+   - After logging in, you'll see all collections in the sidebar
+   - Start by uploading some images to the Media collection
+   - Then create Accommodations and Activities, referencing those media items
+   - **Want sample data?** Run: ```pnpm seed``` to insert the accommodations, activities, and pages in the /sample-data directory of this template.
+   - All content you create is stored in your local SQLite database (`cms.db`)
+   - This content will be immediately available to your frontend!
+
+5. Database Seeding and Migrations:
+   - The first time you run the dev server, Payload creates database tables based on your collection schemas
+   - Your database structure and TypeScript types should always match your collection definitions
+   
+   **Understanding Schema Changes:**
+   - **New Collections**: When you add a new collection (like `Pages.ts`), Payload auto-detects it on restart
+   - **Modified Collections**: When you change existing collection fields, you may need migrations
+   - **Type Safety**: Always regenerate types after any schema changes
+   
+   **Working with Migrations:**
+   - Check what changes Payload detected: `pnpm payload migrate:create`
+   - Apply pending migrations: `pnpm payload migrate`
+   - Check migration status: `pnpm payload migrate:status`
+   - Reset and rebuild everything: `pnpm payload migrate:fresh`
+   
+   **Type Generation (Always Safe):**
+   - After any schema changes: `pnpm payload generate:types`
+   - This updates your TypeScript definitions to match your current collections
+   - Run this after adding new collections or modifying existing ones
+   
+   **Development Workflow:**
+   1. **Add new collection or modify existing**: Make changes to your `.ts` files in `/collections`
+   2. **Restart dev server**: Payload auto-detects most changes
+   3. **Generate types**: `pnpm payload generate:types` (safe to run anytime)
+   4. **If schema conflicts occur**: `pnpm payload migrate:fresh` (destroys all data)
+   5. **Re-seed sample data**: `pnpm seed`
+   
+   **Starting Fresh During Development:**
+   - Use `pnpm payload migrate:fresh` when you encounter schema conflicts
+   - This drops all tables and data, then recreates them from scratch
+   - **Warning**: This deletes ALL data including admin users and content
+   - Best practice: Export your data first if you want to keep it
+   
+   **Seeding Sample Data:**
+   - Run `pnpm seed` to populate with sample accommodations, activities, and pages
+   - The seed script creates an admin user (check console for credentials)
+   - Sample data files in `/sample-data/` can be customized for your needs
+   - Safe to run multiple times - checks for existing data before inserting
+
+
+### Default Payload Collections
+
+See the [Collections](https://payloadcms.com/docs/configuration/collections) docs for details on how to extend this functionality.
+
+- #### Users (Authentication)
+
+  Users are auth-enabled collections that have access to the admin panel.
+
+  For additional help, see the official <a href="https://github.com/payloadcms/payload/tree/main/examples/auth" target="_blank" rel="noopener noreferrer">[Auth Example]</a> or the <a href="https://payloadcms.com/docs/authentication/overview#authentication-overview" target="_blank" rel="noopener noreferrer">[Authentication]</a>.
+
+
+- #### Media
+
+  This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
+
+## 🌐 Custom Webhost Deployment
+
+For deployment to a remote Node/NextJS server (We use <a href="https://my.opalstack.com/signup/?via=CjbhWw" target="_blank" rel="noopener noreferrer">Opalstack</a>), follow these steps:
+
+- **Database Migration**: Switch from local SQLite to a production database by updating your `.env` file with either PostgreSQL or MariaDB connection details
+- **Environment Variables**: Update your production `.env` with your database URI (e.g., `DATABASE_URI=postgresql://username:password@host:port/database` or `DATABASE_URI=mysql://username:password@host:port/database`)
+- **Build Process**: Run `pnpm build` to create the production build
+- **File Upload**: Upload your built application files to your server
+- **Dependencies**: Run `pnpm install --production` on your server to install only production dependencies
+- **Database Setup**: Ensure your PostgreSQL or MariaDB database is created and accessible
+- **Start Application**: Use your hosting provider's process manager or run `pnpm start` to launch the application
+
+### Migrating Your Collection Data
+
+If you've been developing locally with SQLite and need to transfer your collection data to the production database:
+
+1. **Export your data from local SQLite**:
+   ```bash
+   pnpm payload export --output=./my-backup.json
+   ```
+2. **Upload the backup file** to your production server
+3. **Import data to your production database**:
+   ```bash
+   pnpm payload import --file=./my-backup.json
+   ```
+4. **Verify your data**: Log into the admin panel to ensure all collections were imported correctly
+5. **Note about media files!** The export/import process handles collection data, but you'll need to separately transfer media files from your local media directory to your production server's media storage.
+
+**Opalstack Specific**: <a href="https://my.opalstack.com/signup/?via=CjbhWw" target="_blank" rel="noopener noreferrer">Opalstack</a> provides both PostgreSQL and MariaDB options. Choose based on your preference - both work excellently with Payload CMS.
+
+## ▲ Vercel Deployment
+
+For Vercel deployment:
+
+- **Database**: Connect to a cloud database service like PlanetScale (MySQL), Supabase (PostgreSQL), or MongoDB Atlas
+- **Environment Variables**: Add your production database URI and other environment variables in the Vercel dashboard
+- **Build Settings**: Vercel will automatically detect your Next.js application and configure build settings
+- **Deploy**: Connect your GitHub repository to Vercel for automatic deployments on push
+
+Note that Vercel's serverless environment works well with Payload CMS, but ensure your database provider supports connection pooling for optimal performance.
+
+## 🆘 Need Help?
+
+Don't want to do all of the above legwork? Hire Me to Customize and Deploy this Template for your Business!  
+
+Hire Me to Customize and Deploy this Template for your Business  
+<a href="https://github.com/prillcode/payload-outdoors-template/issues/new?title=Interested%20in%20this%20Theme&body=Hi!%20Help%20me%20to%20customize%20this%20template%20for%20my%20business.%0A%0A**About%20my%20business:**%0A%0A**What%20I'm%20looking%20for:**%0A%0A**Timeline:**%0A%0A**Budget%20range:**%0A%0A**Contact%20info:**" target="_blank" rel="noopener noreferrer">
+<img src="https://img.shields.io/badge/💼%20Hire%20Me-Customize%20This%20Template-blue?style=for-the-badge" alt="Hire Me to Customize this Template for your Business">
+</a>
+
+--
+
+## ❓ Questions
+
+If you have any issues or questions, start a [GitHub discussion](https://github.com/prillcode/payload-outdoors-template/discussions).

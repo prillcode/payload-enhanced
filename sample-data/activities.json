@@ -1,0 +1,102 @@
+{
+  "globals": {},
+  "collections": {
+    "activities": [
+      {
+        "name": "Hiking Adventures",
+        "slug": "hiking-adventures",
+        "activityType": "hiking",
+        "description": "Explore our scenic trails through lush forests and mountain vistas. Our guided hikes are suitable for all experience levels.",
+        "duration": "2-4 hours",
+        "difficulty": "moderate",
+        "pricePerPerson": 45,
+        "minAge": 8,
+        "maxParticipants": 12,
+        "season": "year-round",
+        "location": {
+          "name": "Eagle Ridge Trails",
+          "city": "Pineville",
+          "state": "OR"
+        },
+        "available": true,
+        "featuredActivity": true
+      },
+      {
+        "name": "River Kayaking",
+        "slug": "river-kayaking",
+        "activityType": "kayaking",
+        "description": "Paddle through gentle rapids and serene waters with our guided tours. Experience the beauty of nature from a unique perspective.",
+        "duration": "3 hours",
+        "difficulty": "moderate",
+        "pricePerPerson": 65,
+        "minAge": 12,
+        "maxParticipants": 8,
+        "season": "summer",
+        "location": {
+          "name": "Clear Waters Kayaking",
+          "city": "Riverside",
+          "state": "WA"
+        },
+        "available": true,
+        "featuredActivity": true
+      },
+      {
+        "name": "Fishing Trips",
+        "slug": "fishing-trips",
+        "activityType": "fishing",
+        "description": "Join us for a peaceful day of fishing in pristine lakes and rivers. All equipment provided and fish cleaning service available.",
+        "duration": "4-6 hours",
+        "difficulty": "easy",
+        "pricePerPerson": 85,
+        "minAge": 10,
+        "maxParticipants": 6,
+        "season": "spring",
+        "location": {
+          "name": "Trout Haven",
+          "city": "Lakeside",
+          "state": "MT"
+        },
+        "available": true,
+        "featuredActivity": false
+      },
+      {
+        "name": "Wildlife Photography Tour",
+        "slug": "wildlife-photography",
+        "activityType": "photography",
+        "description": "Capture stunning images of local wildlife with guidance from professional nature photographers. Camera rental available.",
+        "duration": "5 hours",
+        "difficulty": "easy",
+        "pricePerPerson": 95,
+        "minAge": 14,
+        "maxParticipants": 8,
+        "season": "year-round",
+        "location": {
+          "name": "Nature Preserve",
+          "city": "Forestville",
+          "state": "CA"
+        },
+        "available": true,
+        "featuredActivity": false
+      },
+      {
+        "name": "Mountain Biking",
+        "slug": "mountain-biking",
+        "activityType": "cycling",
+        "description": "Experience thrilling trails with varying difficulty levels, from gentle forest paths to technical downhill routes.",
+        "duration": "2-3 hours",
+        "difficulty": "challenging",
+        "pricePerPerson": 75,
+        "minAge": 16,
+        "maxParticipants": 10,
+        "season": "summer",
+        "location": {
+          "name": "Ridge Rider Trails",
+          "city": "Summit Creek",
+          "state": "CO"
+        },
+        "available": true,
+        "featuredActivity": true
+      }
+    ]
+  }
+}

@@ -1,0 +1,129 @@
+{
+  "globals": {},
+  "collections": {
+    "accommodations": [
+      {
+        "name": "Forest Cabin",
+        "slug": "forest-cabin",
+        "rentalType": "cabin",
+        "description": "A cozy cabin nestled in the forest, perfect for a quiet retreat. Enjoy the peaceful surroundings and abundant wildlife from your private deck.",
+        "pricePerNight": 150,
+        "maxGuests": 4,
+        "bedrooms": 2,
+        "bathrooms": 1,
+        "amenities": [
+          { "amenity": "Fireplace" },
+          { "amenity": "Hot Tub" },
+          { "amenity": "Wi-Fi" },
+          { "amenity": "Fully Equipped Kitchen" },
+          { "amenity": "Hiking Trails Access" }
+        ],
+        "location": {
+          "address": "123 Forest Road",
+          "city": "Pineville",
+          "state": "OR",
+          "zipCode": "97123"
+        },
+        "available": true
+      },
+      {
+        "name": "Lakeside Lodge",
+        "slug": "lakeside-lodge",
+        "rentalType": "house",
+        "description": "Spacious home with panoramic lake views. Perfect for families and groups looking to enjoy water activities and stunning sunsets.",
+        "pricePerNight": 275,
+        "maxGuests": 8,
+        "bedrooms": 4,
+        "bathrooms": 3,
+        "amenities": [
+          { "amenity": "Private Dock" },
+          { "amenity": "BBQ Grill" },
+          { "amenity": "Kayaks" },
+          { "amenity": "Fishing Equipment" },
+          { "amenity": "Fire Pit" },
+          { "amenity": "Game Room" }
+        ],
+        "location": {
+          "address": "456 Lakeview Drive",
+          "city": "Lakeside",
+          "state": "WA",
+          "zipCode": "98765"
+        },
+        "available": true
+      },
+      {
+        "name": "Mountain Chalet",
+        "slug": "mountain-chalet",
+        "rentalType": "chalet",
+        "description": "Luxury mountain chalet with breathtaking views of snow-capped peaks. Ideal for winter sports enthusiasts and summer hikers.",
+        "pricePerNight": 325,
+        "maxGuests": 6,
+        "bedrooms": 3,
+        "bathrooms": 2,
+        "amenities": [
+          { "amenity": "Sauna" },
+          { "amenity": "Wood-burning Stove" },
+          { "amenity": "Ski Storage" },
+          { "amenity": "Boot Warmers" },
+          { "amenity": "Mountain Views" },
+          { "amenity": "Home Theater" }
+        ],
+        "location": {
+          "address": "789 Alpine Way",
+          "city": "Summit Creek",
+          "state": "CO",
+          "zipCode": "80424"
+        },
+        "available": true
+      },
+      {
+        "name": "Riverside Glamping Tent",
+        "slug": "riverside-glamping",
+        "rentalType": "room",
+        "description": "Experience luxury camping by the river. Our canvas tents feature real beds, electricity, and heating while maintaining the magic of sleeping in nature.",
+        "pricePerNight": 95,
+        "maxGuests": 2,
+        "bedrooms": 1,
+        "bathrooms": 0.5,
+        "amenities": [
+          { "amenity": "Queen Bed with Premium Linens" },
+          { "amenity": "Shared Bathhouse" },
+          { "amenity": "River Access" },
+          { "amenity": "Outdoor Seating" },
+          { "amenity": "Solar Lights" }
+        ],
+        "location": {
+          "address": "101 River Camp Road",
+          "city": "Creekside",
+          "state": "MT",
+          "zipCode": "59714"
+        },
+        "available": true
+      },
+      {
+        "name": "Treehouse Retreat",
+        "slug": "treehouse-retreat",
+        "rentalType": "cabin",
+        "description": "Unique accommodation 15 feet above the forest floor. This architectural gem features modern amenities while being surrounded by nature.",
+        "pricePerNight": 200,
+        "maxGuests": 2,
+        "bedrooms": 1,
+        "bathrooms": 1,
+        "amenities": [
+          { "amenity": "Suspended Bridge Entrance" },
+          { "amenity": "Panoramic Windows" },
+          { "amenity": "Rain Shower" },
+          { "amenity": "Mini Kitchen" },
+          { "amenity": "Observation Deck" }
+        ],
+        "location": {
+          "address": "222 Canopy Lane",
+          "city": "Forestville",
+          "state": "CA",
+          "zipCode": "95436"
+        },
+        "available": true
+      }
+    ]
+  }
+}

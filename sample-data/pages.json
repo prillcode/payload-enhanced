@@ -1,0 +1,128 @@
+[
+  {
+    "title": "About Us",
+    "slug": "about",
+    "hero": {
+      "title": "About Great Outdoors",
+      "description": "Discover our passion for connecting people with nature through unforgettable outdoor experiences.",
+      "gradient": "from-forest-600 to-forest-800"
+    },
+    "content": {
+      "root": {
+        "type": "root",
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "text": "Welcome to Great Outdoors, where adventure meets comfort in the heart of nature. For over a decade, we've been dedicated to providing exceptional outdoor experiences that create lasting memories for individuals, families, and groups."
+              }
+            ]
+          },
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "text": "Our mission is simple: to help you disconnect from the digital world and reconnect with the natural one. Whether you're seeking a peaceful retreat or an adrenaline-pumping adventure, we have the perfect accommodation and activity waiting for you."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "sections": [
+      {
+        "sectionTitle": "Our Story",
+        "layout": "centered",
+        "backgroundColor": "bg-earth-50",
+        "sectionContent": {
+          "root": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "text": "Founded in 2012 by outdoor enthusiasts Sarah and Mike Thompson, Great Outdoors began as a small family business with a big dream: to share the transformative power of nature with others."
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "seo": {
+      "metaTitle": "About Great Outdoors - Your Outdoor Adventure Company",
+      "metaDescription": "Learn about Great Outdoors, your premier destination for outdoor adventures and nature accommodations. Connecting people with nature since 2012.",
+      "keywords": "about great outdoors, outdoor adventure company, nature experiences, outdoor accommodations"
+    },
+    "status": "published"
+  },
+  {
+    "title": "Contact Us",
+    "slug": "contact",
+    "hero": {
+      "title": "Get In Touch",
+      "description": "Ready to plan your next outdoor adventure? We're here to help you create the perfect experience.",
+      "gradient": "from-earth-400 to-earth-700"
+    },
+    "content": {
+      "root": {
+        "type": "root",
+        "children": [
+          {
+            "type": "paragraph",
+            "children": [
+              {
+                "type": "text",
+                "text": "We'd love to hear from you! Whether you're planning your first outdoor adventure or you're a seasoned explorer looking for something new, our team is here to help you create the perfect experience."
+              }
+            ]
+          }
+        ]
+      }
+    },
+    "sections": [
+      {
+        "sectionTitle": "Contact Information",
+        "layout": "two-column",
+        "backgroundColor": "bg-earth-50",
+        "sectionContent": {
+          "root": {
+            "type": "root",
+            "children": [
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "text": "Phone: (555) 123-4567"
+                  }
+                ]
+              },
+              {
+                "type": "paragraph",
+                "children": [
+                  {
+                    "type": "text",
+                    "text": "Email: info@greatoutdoors.com"
+                  }
+                ]
+              }
+            ]
+          }
+        }
+      }
+    ],
+    "seo": {
+      "metaTitle": "Contact Great Outdoors - Plan Your Adventure Today",
+      "metaDescription": "Get in touch with Great Outdoors to plan your perfect outdoor adventure. Phone, email, and office visit options available.",
+      "keywords": "contact great outdoors, outdoor adventure booking, nature experience planning"
+    },
+    "status": "published"
+  }
+]
