@@ -90,8 +90,12 @@ export interface Config {
   db: {
     defaultIDType: number;
   };
-  globals: {};
-  globalsSelect: {};
+  globals: {
+    'site-settings': SiteSetting;
+  };
+  globalsSelect: {
+    'site-settings': SiteSettingsSelect<false> | SiteSettingsSelect<true>;
+  };
   locale: null;
   user: User & {
     collection: 'users';
@@ -153,7 +157,14 @@ export interface Accommodation {
   name: string;
   slug: string;
   rentalType: 'cabin' | 'house' | 'apartment' | 'duplex' | 'condo' | 'villa' | 'room';
-  description?: {
+  /**
+   * Brief description shown in accommodation lists and cards
+   */
+  shortDescription?: string | null;
+  /**
+   * Optional rich content that will appear below the short description on the accommodation detail page
+   */
+  pageContent?: {
     root: {
       type: string;
       children: {
@@ -257,7 +268,14 @@ export interface Activity {
     | 'camping'
     | 'photography'
     | 'other';
-  description?: {
+  /**
+   * Brief description shown in activity lists and cards
+   */
+  shortDescription?: string | null;
+  /**
+   * Optional rich content that will appear below the short description on the activity detail page
+   */
+  pageContent?: {
     root: {
       type: string;
       children: {
@@ -362,6 +380,7 @@ export interface Page {
     keywords?: string | null;
   };
   status?: ('draft' | 'published') | null;
+  showInNavigation?: boolean | null;
   updatedAt: string;
   createdAt: string;
 }
@@ -465,7 +484,8 @@ export interface AccommodationsSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   rentalType?: T;
-  description?: T;
+  shortDescription?: T;
+  pageContent?: T;
   pricePerNight?: T;
   maxGuests?: T;
   bedrooms?: T;
@@ -502,7 +522,8 @@ export interface ActivitiesSelect<T extends boolean = true> {
   name?: T;
   slug?: T;
   activityType?: T;
-  description?: T;
+  shortDescription?: T;
+  pageContent?: T;
   duration?: T;
   difficulty?: T;
   pricePerPerson?: T;
@@ -614,6 +635,7 @@ export interface PagesSelect<T extends boolean = true> {
         keywords?: T;
       };
   status?: T;
+  showInNavigation?: T;
   updatedAt?: T;
   createdAt?: T;
 }
@@ -648,6 +670,136 @@ export interface PayloadMigrationsSelect<T extends boolean = true> {
   batch?: T;
   updatedAt?: T;
   createdAt?: T;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings".
+ */
+export interface SiteSetting {
+  id: number;
+  siteTitle: string;
+  siteDescription: string;
+  showSiteDescriptionInHeader?: boolean | null;
+  siteLogo?: (number | null) | Media;
+  hideSiteTitleIfLogo?: boolean | null;
+  /**
+   * Hex code or CSS color for branding (e.g., #1a202c)
+   */
+  primaryColor?: string | null;
+  homeHeroTitle: string;
+  homeHeroDescription?: string | null;
+  homeHeroIntroText?: string | null;
+  homePageSlider?: {
+    slides?:
+      | {
+          image: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[]
+      | null;
+  };
+  homeActivitiesSection: {
+    /**
+     * Toggle to show or hide this section on the homepage
+     */
+    displaySection?: boolean | null;
+    title: string;
+    description?: string | null;
+    numberOfItems: number;
+  };
+  homeAccommodationsSection: {
+    /**
+     * Toggle to show or hide this section on the homepage
+     */
+    displaySection?: boolean | null;
+    title: string;
+    description?: string | null;
+    numberOfItems: number;
+  };
+  homeCallToActionSection: {
+    /**
+     * Toggle to show or hide this section on the homepage
+     */
+    displaySection?: boolean | null;
+    title: string;
+    description?: string | null;
+    buttonText: string;
+    buttonLink: string;
+  };
+  contactEmail?: string | null;
+  socialLinks?:
+    | {
+        platform: string;
+        url: string;
+        id?: string | null;
+      }[]
+    | null;
+  footerText?: string | null;
+  updatedAt?: string | null;
+  createdAt?: string | null;
+}
+/**
+ * This interface was referenced by `Config`'s JSON-Schema
+ * via the `definition` "site-settings_select".
+ */
+export interface SiteSettingsSelect<T extends boolean = true> {
+  siteTitle?: T;
+  siteDescription?: T;
+  showSiteDescriptionInHeader?: T;
+  siteLogo?: T;
+  hideSiteTitleIfLogo?: T;
+  primaryColor?: T;
+  homeHeroTitle?: T;
+  homeHeroDescription?: T;
+  homeHeroIntroText?: T;
+  homePageSlider?:
+    | T
+    | {
+        slides?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              id?: T;
+            };
+      };
+  homeActivitiesSection?:
+    | T
+    | {
+        displaySection?: T;
+        title?: T;
+        description?: T;
+        numberOfItems?: T;
+      };
+  homeAccommodationsSection?:
+    | T
+    | {
+        displaySection?: T;
+        title?: T;
+        description?: T;
+        numberOfItems?: T;
+      };
+  homeCallToActionSection?:
+    | T
+    | {
+        displaySection?: T;
+        title?: T;
+        description?: T;
+        buttonText?: T;
+        buttonLink?: T;
+      };
+  contactEmail?: T;
+  socialLinks?:
+    | T
+    | {
+        platform?: T;
+        url?: T;
+        id?: T;
+      };
+  footerText?: T;
+  updatedAt?: T;
+  createdAt?: T;
+  globalType?: T;
 }
 /**
  * This interface was referenced by `Config`'s JSON-Schema

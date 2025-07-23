@@ -4,22 +4,22 @@ import { getPayload } from 'payload'
 import Link from 'next/link'
 import { ClockIcon, UserGroupIcon, CurrencyDollarIcon } from '@heroicons/react/24/outline'
 import config from '@/payload.config'
-import Hero from '../../_components/Hero'
+import Hero from '../../(components)/Hero'
+import LexicalRenderer from '../../(components)/LexicalRenderer'
 
 interface ActivityPageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export default async function ActivityPage({ params }: ActivityPageProps) {
+  const { slug } = await params
   const payload = await getPayload({ config: await config })
 
   const activityResponse = await payload.find({
     collection: 'activities',
     where: {
       slug: {
-        equals: params.slug,
+        equals: slug,
       },
     },
     limit: 1,
@@ -80,13 +80,20 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
             {/* Description */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-forest-800 mb-6">About This Activity</h2>
-              <div className="prose prose-lg max-w-none text-earth-700">
+              
+              {/* Short Description */}
+              <div className="prose prose-lg max-w-none text-earth-700 mb-6">
                 <p>
-                  {activity.description && typeof activity.description === 'string'
-                    ? activity.description
+                  {activity.shortDescription 
+                    ? activity.shortDescription
                     : 'Join us for an exciting outdoor adventure experience that will create lasting memories.'}
                 </p>
               </div>
+
+              {/* Additional Page Content (if provided) */}
+              {activity.pageContent && (
+                <LexicalRenderer content={activity.pageContent} />
+              )}
             </section>
 
             {/* Location */}
@@ -253,12 +260,14 @@ export async function generateStaticParams() {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ActivityPageProps) {
   const payload = await getPayload({ config: await config })
+  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  const SITE_TITLE = siteSettings.siteTitle?.trim() || 'Custom Site Title'
 
   const activityResponse = await payload.find({
     collection: 'activities',
     where: {
       slug: {
-        equals: params.slug,
+        equals: (await params).slug,
       },
     },
     limit: 1,
@@ -273,19 +282,20 @@ export async function generateMetadata({ params }: ActivityPageProps) {
   }
 
   const description =
-    typeof activity.description === 'string' && activity.description
-      ? activity.description
-      : `Join us for ${activity.name} - an exciting outdoor adventure experience.`
+    activity.shortDescription
+      ? activity.shortDescription
+      : `${activity.name} - ${activity.activityType} at ${SITE_TITLE}.`
 
   return {
     title: `${activity.name} | Great Outdoors`,
     description,
-    keywords: [
-      activity.name,
-      activity.activityType,
-      'outdoor activities',
-      'nature',
-      'adventure',
-    ].filter(Boolean),
+    keywords: [activity.name, activity.activityType].filter(
+      (kw): kw is string => typeof kw === 'string' && !!kw,
+    ),
+    openGraph: {
+      title: `${activity.name} - ${activity.activityType} | ${SITE_TITLE}`,
+      description,
+      type: 'website',
+    },
   }
 }

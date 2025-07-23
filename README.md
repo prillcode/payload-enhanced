@@ -11,6 +11,22 @@ If you get stuck or just want someone to do all of the work for you, let me cust
 <img src="https://img.shields.io/badge/💼%20Hire%20Me-Customize%20This%20Template-blue?style=for-the-badge" alt="Hire Me to Customize this Template for your Business">
 </a>
 
+## Table of Contents
+- [What You Get with this Theme](#-what-you-get-with-this-theme)
+  - [Theme File Organization](#theme-file-organization)
+- [Quick Start - Local Setup](#-quick-start---local-setup)
+  - [Clone Repo or Use this Template](#clone-repo-or-use-this-template)
+  - [Front-end Development](#front-end-development)
+  - [Back-end CMS](#back-end-cms)
+- [Extended Walkthrough](#-extended-walkthrough)
+  - [Payload CMS](#payload-cms)
+  - [Default Payload Collections](#default-payload-collections)
+- [Custom Webhost Deployment](#-custom-webhost-deployment)
+  - [Migrating Your Collection Data](#migrating-your-collection-data)
+- [Vercel Deployment](#-vercel-deployment)
+- [Need Help?](#-need-help)
+- [Questions](#-questions)
+
 ## ✨ What You Get with this Theme 
 
 - **Nature/Outdoor Adventure Design**: Custom color palette with forest and earth tones, designed specifically for outdoor destinations and adventure tourism

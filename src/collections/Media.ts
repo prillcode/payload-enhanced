@@ -9,7 +9,6 @@ const Media: CollectionConfig = {
     read: () => true,
   },
   upload: {
-    staticDir: 'media',
     imageSizes: [
       {
         name: 'thumbnail',

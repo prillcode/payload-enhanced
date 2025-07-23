@@ -64,10 +64,15 @@ async function AccommodationList({
                   {accomm.maxGuests} guests
                 </p>
                 {accomm.location && (
-                  <p className="text-sm text-earth-500 mb-4">
+                  <p className="text-sm text-earth-500 mb-3">
                     {accomm.location.city}, {accomm.location.state}
                   </p>
                 )}
+                <p className="text-earth-700 mb-4 flex-grow">
+                  {accomm.shortDescription 
+                    ? accomm.shortDescription
+                    : 'A comfortable accommodation for your outdoor getaway.'}
+                </p>
                 <Link
                   href={`/accommodations/${accomm.slug}`}
                   className="text-sunset-600 hover:text-sunset-700 font-medium mt-auto"

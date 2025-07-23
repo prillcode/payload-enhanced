@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from '../_components/Hero'
-import AccommodationList from '../_components/AccommodationList'
+import Hero from '../(components)/Hero'
+import AccommodationList from '../(components)/AccommodationList'
 
 export default async function AccommodationsPage() {
   return (

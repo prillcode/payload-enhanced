@@ -130,10 +130,29 @@ const runSeed = async () => {
       }
     }
 
+    // ----- SITE SETTINGS -----
+    console.log('\nProcessing site settings...')
+
+    try {
+      const siteSettingsData = readJsonFile('site-settings.json')
+      
+      // Update the site-settings global
+      const result = await payload.updateGlobal({
+        slug: 'site-settings',
+        data: siteSettingsData,
+      })
+      
+      console.log('✅ Site settings updated successfully')
+    } catch (error) {
+      console.error('❌ Error updating site settings:', error.message)
+    }
+
     // ----- SUMMARY -----
     console.log('\n===== IMPORT SUMMARY =====')
     console.log(`Accommodations: ${accommodationsInserted} inserted`)
     console.log(`Activities: ${activitiesInserted} inserted`)
+    console.log(`Pages: ${pagesInserted} inserted`)
+    console.log('✅ Site settings updated')
     console.log('Import complete!')
 
     process.exit(0)

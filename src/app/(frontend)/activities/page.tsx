@@ -1,6 +1,6 @@
 import React from 'react'
-import Hero from '../_components/Hero'
-import ActivityList from '../_components/ActivityList'
+import Hero from '../(components)/Hero'
+import ActivityList from '../(components)/ActivityList'
 
 export default async function ActivitiesPage() {
   return (

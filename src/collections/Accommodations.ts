@@ -38,8 +38,20 @@ const Accommodations: CollectionConfig = {
       ],
     },
     {
-      name: 'description',
+      name: 'shortDescription',
+      type: 'text',
+      label: 'Short Description (for listings)',
+      admin: {
+        description: 'Brief description shown in accommodation lists and cards',
+      },
+    },
+    {
+      name: 'pageContent',
       type: 'richText',
+      label: 'Additional Page Content (optional)',
+      admin: {
+        description: 'Optional rich content that will appear below the short description on the accommodation detail page',
+      },
     },
     {
       name: 'pricePerNight',

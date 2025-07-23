@@ -9,16 +9,16 @@ import {
   MapPinIcon,
 } from '@heroicons/react/24/outline'
 import config from '@/payload.config'
-import Hero from '../../_components/Hero'
+import Hero from '../../(components)/Hero'
+import LexicalRenderer from '../../(components)/LexicalRenderer'
 
-type AccommodationDetailPageProps = {
-  params: {
-    slug: string
-  }
+//type AccommodationPageProps = { slug: string }
+interface AccommodationPageProps {
+  params: Promise<{ slug: string }>
 }
 
-export default async function AccommodationDetailPage({ params }: AccommodationDetailPageProps) {
-  const { slug } = params
+export default async function AccommodationDetailPage({ params }: AccommodationPageProps) {
+  const { slug } = await params
   const payload = await getPayload({ config: await config })
 
   const accommodationResponse = await payload.find({
@@ -106,13 +106,20 @@ export default async function AccommodationDetailPage({ params }: AccommodationD
             {/* Description */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-forest-800 mb-6">About This Place</h2>
-              <div className="prose prose-lg max-w-none text-earth-700">
+              
+              {/* Short Description */}
+              <div className="prose prose-lg max-w-none text-earth-700 mb-6">
                 <p>
-                  {accommodation.description && typeof accommodation.description === 'string'
-                    ? accommodation.description
+                  {accommodation.shortDescription 
+                    ? accommodation.shortDescription
                     : 'Experience comfort and tranquility in this beautiful accommodation nestled in nature.'}
                 </p>
               </div>
+
+              {/* Additional Page Content (if provided) */}
+              {accommodation.pageContent && (
+                <LexicalRenderer content={accommodation.pageContent} />
+              )}
             </section>
 
             {/* Property Details */}
@@ -242,7 +249,7 @@ export default async function AccommodationDetailPage({ params }: AccommodationD
             </div>
 
             {/* Property Highlights */}
-            <div className="bg-earth-50 rounded-lg p-6 mt-6">
+            {/* <div className="bg-earth-50 rounded-lg p-6 mt-6">
               <h3 className="font-bold text-forest-800 mb-4">Property Highlights</h3>
               <ul className="space-y-2 text-sm text-earth-700">
                 <li>• Peaceful natural setting</li>
@@ -251,7 +258,7 @@ export default async function AccommodationDetailPage({ params }: AccommodationD
                 <li>• Local area recommendations</li>
                 <li>• 24/7 emergency contact</li>
               </ul>
-            </div>
+            </div> */}
           </div>
         </div>
 
@@ -286,14 +293,16 @@ export async function generateStaticParams() {
 }
 
 // Generate metadata for SEO
-export async function generateMetadata({ params }: AccommodationDetailPageProps) {
+export async function generateMetadata({ params }: AccommodationPageProps) {
   const payload = await getPayload({ config: await config })
+  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  const SITE_TITLE = siteSettings.siteTitle?.trim() || 'Custom Site Title'
 
   const accommodationResponse = await payload.find({
     collection: 'accommodations',
     where: {
       slug: {
-        equals: params.slug,
+        equals: (await params).slug,
       },
     },
     limit: 1,
@@ -308,29 +317,25 @@ export async function generateMetadata({ params }: AccommodationDetailPageProps)
   }
 
   const description =
-    accommodation.description && typeof accommodation.description === 'string'
-      ? accommodation.description
-      : `Stay at ${accommodation.name} - a beautiful ${accommodation.rentalType} in ${accommodation.location?.city || 'nature'}. Perfect for your outdoor adventure.`
+    accommodation.shortDescription
+      ? accommodation.shortDescription
+      : `${accommodation.name} - a ${accommodation.rentalType} in ${accommodation.location?.city}`
 
   const location = accommodation.location
     ? `${accommodation.location.city}, ${accommodation.location.state}`
-    : 'Great Outdoors'
+    : `${SITE_TITLE}`
 
   return {
-    title: `${accommodation.name} | ${location} | Great Outdoors`,
+    title: `${accommodation.name} | ${location} | ${SITE_TITLE}`,
     description,
     keywords: [
       accommodation.name,
       accommodation.rentalType,
       accommodation.location?.city,
       accommodation.location?.state,
-      'accommodations',
-      'vacation rental',
-      'outdoor lodging',
-      'nature retreat',
-    ].filter(Boolean),
+    ].filter((kw): kw is string => typeof kw === 'string' && !!kw),
     openGraph: {
-      title: `${accommodation.name} - ${accommodation.rentalType}`,
+      title: `${accommodation.name} - ${accommodation.rentalType} | ${SITE_TITLE}`,
       description,
       type: 'website',
     },

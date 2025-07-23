@@ -40,8 +40,20 @@ const Activities: CollectionConfig = {
       ],
     },
     {
-      name: 'description',
+      name: 'shortDescription',
+      type: 'text',
+      label: 'Short Description (for listings)',
+      admin: {
+        description: 'Brief description shown in activity lists and cards',
+      },
+    },
+    {
+      name: 'pageContent',
       type: 'richText',
+      label: 'Additional Page Content (optional)',
+      admin: {
+        description: 'Optional rich content that will appear below the short description on the activity detail page',
+      },
     },
     {
       name: 'duration',

@@ -60,8 +60,8 @@ async function ActivityList({
                   {activity.pricePerPerson && <span> • ${activity.pricePerPerson}/person</span>}
                 </div>
                 <p className="text-earth-700 mb-4 flex-grow">
-                  {activity.description && typeof activity.description === 'string'
-                    ? activity.description
+                  {activity.shortDescription 
+                    ? activity.shortDescription
                     : 'Join us for an exciting outdoor adventure experience.'}
                 </p>
                 <Link

@@ -3,16 +3,15 @@ import { notFound } from 'next/navigation'
 import { getPayload } from 'payload'
 import config from '@/payload.config'
 import { default as payloadConfig } from '@/payload.config'
-import Hero from '../../_components/Hero'
-import CustomPageRenderer from '../../_components/CustomPageRenderer'
+import Hero from '../../(components)/Hero'
+import CustomPageRenderer from '../../(components)/CustomPageRenderer'
 
 interface PageProps {
-  params: {
-    slug: string
-  }
+  params: Promise<{ slug: string }>
 }
 
 export default async function DynamicPage({ params }: PageProps) {
+  const { slug } = await params
   const payload = await getPayload({ config: await config })
 
   // Fetch the page content by slug
@@ -22,7 +21,7 @@ export default async function DynamicPage({ params }: PageProps) {
       and: [
         {
           slug: {
-            equals: params.slug,
+            equals: slug,
           },
         },
         {
@@ -129,6 +128,7 @@ export async function generateStaticParams() {
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: PageProps) {
+  const { slug } = await params
   const payload = await getPayload({ config: await config })
 
   const pageResponse = await payload.find({
@@ -137,7 +137,7 @@ export async function generateMetadata({ params }: PageProps) {
       and: [
         {
           slug: {
-            equals: params.slug,
+            equals: slug,
           },
         },
         {
@@ -165,8 +165,6 @@ export async function generateMetadata({ params }: PageProps) {
       page.seo?.metaDescription || page.hero?.description || `Learn more about ${page.title}`,
     keywords: page.seo?.keywords?.split(',').map((k: string) => k.trim()) || [
       page.title.toLowerCase(),
-      'great outdoors',
-      'outdoor adventures',
     ],
     openGraph: {
       title: page.seo?.metaTitle || page.title,

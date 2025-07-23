@@ -1,0 +1,38 @@
+{
+  "siteTitle": "Great Outdoors",
+  "siteDescription": "Your premier destination for outdoor adventures and nature accommodations",
+  "showSiteDescriptionInHeader": true,
+  "hideSiteTitleIfLogo": false,
+  "homeHeroTitle": "Explore the Great Outdoors",
+  "homeHeroDescription": "Discover peaceful retreats and thrilling adventures in the heart of nature.",
+  "homeHeroIntroText": "Welcome to Great Outdoors, where adventure meets comfort in the heart of nature. We connect people with unforgettable outdoor experiences, from cozy cabin retreats to exciting wilderness adventures.",
+  "homeActivitiesSectionDisplaySection": true,
+  "homeActivitiesSectionTitle": "Popular Activities",
+  "homeActivitiesSectionDescription": "Experience the thrill of outdoor adventures with our carefully curated selection of activities. From heart-pumping adventures to peaceful nature experiences, there's something for everyone.",
+  "homeActivitiesSectionNumberOfItems": 3,
+  "homeAccommodationsSectionDisplaySection": true,
+  "homeAccommodationsSectionTitle": "Available Lodging",
+  "homeAccommodationsSectionDescription": "Explore our range of comfortable and scenic accommodations, perfect for your next getaway.",
+  "homeAccommodationsSectionNumberOfItems": 3,
+  "homeCallToActionSectionDisplaySection": true,
+  "homeCallToActionSectionTitle": "Ready for Your Next Adventure?",
+  "homeCallToActionSectionDescription": "Book your stay now and experience the beauty of nature with comfortable accommodations.",
+  "homeCallToActionSectionButtonText": "Contact Us Today",
+  "homeCallToActionSectionButtonLink": "/pages/contact",
+  "contactEmail": "info@greatoutdoors.com",
+  "footerText": "© 2024 Great Outdoors. All rights reserved. | Connecting people with nature since 2012.",
+  "socialLinks": [
+    {
+      "platform": "facebook",
+      "url": "https://facebook.com/greatoutdoors"
+    },
+    {
+      "platform": "instagram", 
+      "url": "https://instagram.com/greatoutdoors"
+    },
+    {
+      "platform": "twitter",
+      "url": "https://twitter.com/greatoutdoors"
+    }
+  ]
+}

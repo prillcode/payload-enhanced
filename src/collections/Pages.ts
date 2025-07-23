@@ -130,6 +130,7 @@ export const Pages: CollectionConfig = {
         },
       ],
     },
+    // status (Published or Draft)
     {
       name: 'status',
       type: 'select',
@@ -138,6 +139,16 @@ export const Pages: CollectionConfig = {
         { label: 'Published', value: 'published' },
       ],
       defaultValue: 'draft',
+      admin: {
+        position: 'sidebar',
+      },
+    },
+    // showInNavigation boolean
+    {
+      name: 'showInNavigation',
+      type: 'checkbox',
+      label: 'Show Page in Navigation Menus',
+      defaultValue: true,
       admin: {
         position: 'sidebar',
       },
