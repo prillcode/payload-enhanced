@@ -16,7 +16,7 @@ COPY db-migration-service/migrate.js ./migrate.js
 RUN npm install -g pnpm
 
 # Install dependencies for migration service using the migration-specific package.json
-RUN mv migration-package.json package.json && pnpm install --frozen-lockfile
+RUN mv migration-package.json package.json && pnpm install --no-frozen-lockfile
 
 # Run the migration and seeding
 CMD ["node", "migrate.js"]
