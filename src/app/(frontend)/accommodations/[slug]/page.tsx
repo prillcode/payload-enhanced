@@ -280,16 +280,22 @@ export default async function AccommodationDetailPage({ params }: AccommodationP
 
 // Generate static params for build optimization
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: await config })
+  try {
+    const payload = await getPayload({ config: await config })
 
-  const accommodations = await payload.find({
-    collection: 'accommodations',
-    limit: 1000,
-  })
+    const accommodations = await payload.find({
+      collection: 'accommodations',
+      limit: 1000,
+    })
 
-  return accommodations.docs.map((accommodation) => ({
-    slug: accommodation.slug,
-  }))
+    return accommodations.docs.map((accommodation) => ({
+      slug: accommodation.slug,
+    }))
+  } catch (error) {
+    // During build, database might not be ready yet - return empty array
+    console.warn('Could not generate static params for accommodations:', error.message)
+    return []
+  }
 }
 
 // Generate metadata for SEO

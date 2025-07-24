@@ -245,16 +245,22 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
 
 // Generate static params for build optimization
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: await config })
+  try {
+    const payload = await getPayload({ config: await config })
 
-  const activities = await payload.find({
-    collection: 'activities',
-    limit: 1000,
-  })
+    const activities = await payload.find({
+      collection: 'activities',
+      limit: 1000,
+    })
 
-  return activities.docs.map((activity) => ({
-    slug: activity.slug,
-  }))
+    return activities.docs.map((activity) => ({
+      slug: activity.slug,
+    }))
+  } catch (error) {
+    // During build, database might not be ready yet - return empty array
+    console.warn('Could not generate static params for activities:', error.message)
+    return []
+  }
 }
 
 // Generate metadata for SEO

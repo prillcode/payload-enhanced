@@ -109,21 +109,27 @@ export default async function DynamicPage({ params }: PageProps) {
 
 // Generate static params for all published pages
 export async function generateStaticParams() {
-  const payload = await getPayload({ config: await config })
+  try {
+    const payload = await getPayload({ config: await config })
 
-  const pages = await payload.find({
-    collection: 'pages',
-    where: {
-      status: {
-        equals: 'published',
+    const pages = await payload.find({
+      collection: 'pages',
+      where: {
+        status: {
+          equals: 'published',
+        },
       },
-    },
-    limit: 1000,
-  })
+      limit: 1000,
+    })
 
-  return pages.docs.map((page) => ({
-    slug: page.slug,
-  }))
+    return pages.docs.map((page) => ({
+      slug: page.slug,
+    }))
+  } catch (error) {
+    // During build, database might not be ready yet - return empty array
+    console.warn('Could not generate static params for pages:', error.message)
+    return []
+  }
 }
 
 // Generate metadata for SEO
