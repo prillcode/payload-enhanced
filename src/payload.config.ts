@@ -1,5 +1,6 @@
 import { buildConfig } from 'payload'
-import { sqliteAdapter } from '@payloadcms/db-sqlite'
+import { sqliteAdapter } from '@payloadcms/db-sqlite' //used in local development
+import { postgresAdapter } from '@payloadcms/db-postgres' //used in production
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { fileURLToPath } from 'url'
 import path from 'path'
@@ -18,6 +19,23 @@ import Accommodations from './collections/Accommodations'
 import Activities from './collections/Activities'
 import { Pages } from './collections/Pages'
 
+// Determine database type based on DATABASE_URI format
+// This allows builds to work in development with SQLite
+const isPostgres = process.env.DATABASE_URI?.startsWith('postgres')
+
+// Configure database adapter based on database URI format
+const databaseAdapter = isPostgres
+  ? postgresAdapter({
+      pool: {
+        connectionString: process.env.DATABASE_URI,
+      },
+    })
+  : sqliteAdapter({
+      client: {
+        url: process.env.DATABASE_URI || 'file:./cms.db',
+      },
+    })
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -29,11 +47,7 @@ export default buildConfig({
   typescript: {
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
-  db: sqliteAdapter({
-    client: {
-      url: process.env.DATABASE_URI || 'file:./cms.db',
-    },
-  }),
+  db: databaseAdapter,
   cors: [
     'http://localhost:3000', // Your Dev server
     'http://localhost:3001', // Dev server - Alternative port

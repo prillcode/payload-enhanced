@@ -20,6 +20,7 @@
   },
   "dependencies": {
     "@heroicons/react": "^2.2.0",
+    "@payloadcms/db-postgres": "^3.48.0",
     "@payloadcms/db-sqlite": "3.48.0",
     "@payloadcms/next": "3.48.0",
     "@payloadcms/payload-cloud": "3.48.0",
