@@ -52,15 +52,15 @@ export default function LexicalRenderer({ content, className = 'prose prose-lg m
   }
 
   const renderTextNode = (node: LexicalTextNode, index: number) => {
-    let text = node.text
+    let text: React.ReactNode = node.text
 
     // Handle formatting (bold, italic, etc.)
     if (node.format) {
       // Lexical format is a bitmask: 1 = bold, 2 = italic, 4 = strikethrough, 8 = underline
-      if (node.format & 1) text = <strong key={`bold-${index}`}>{text}</strong>
-      if (node.format & 2) text = <em key={`italic-${index}`}>{text}</em>
-      if (node.format & 4) text = <s key={`strike-${index}`}>{text}</s>
-      if (node.format & 8) text = <u key={`underline-${index}`}>{text}</u>
+      if (node.format & 1) text = <strong>{text}</strong>
+      if (node.format & 2) text = <em>{text}</em>
+      if (node.format & 4) text = <s>{text}</s>
+      if (node.format & 8) text = <u>{text}</u>
     }
 
     return <span key={index}>{text}</span>
