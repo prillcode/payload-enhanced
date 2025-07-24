@@ -16,7 +16,7 @@ export async function generateMetadata() {
         siteSettings.siteDescription?.trim() || 'Set Site Title and Description in Admin Panel',
     }
   } catch (error) {
-    console.warn('Could not load site settings for metadata:', error.message)
+    console.warn('Could not load site settings for metadata:', error instanceof Error ? error.message : String(error))
     return {
       title: 'Custom Site Title',
       description: 'Set Site Title and Description in Admin Panel',
@@ -49,7 +49,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     accommodations = results[1]
     pages = results[2]
   } catch (error) {
-    console.warn('Could not load site data for layout:', error.message)
+    console.warn('Could not load site data for layout:', error instanceof Error ? error.message : String(error))
   }
 
   const siteTitle = siteSettings.siteTitle?.trim() || 'Custom Site Title'

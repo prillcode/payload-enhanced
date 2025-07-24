@@ -6,7 +6,9 @@ WORKDIR /app
 # Copy the entire project (needed for collections, globals, and seed data)
 COPY ../package.json ../pnpm-lock.yaml ./
 COPY ../src ./src
-COPY ../sample-data ./sample-data
+
+# Copy the db-migration-service files
+COPY ./src/sample-data ./sample-data
 COPY ./package.json ./
 COPY ./migrate.js ./
 
