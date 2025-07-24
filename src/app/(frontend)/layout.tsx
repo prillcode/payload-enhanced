@@ -7,35 +7,57 @@ import Header from './(components)/Header'
 import Footer from './(components)/Footer'
 
 export async function generateMetadata() {
-  const payload = await getPayload({ config: await config })
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
-  return {
-    title: siteSettings.siteTitle?.trim() || 'Custom Site Title',
-    description:
-      siteSettings.siteDescription?.trim() || 'Set Site Title and Description in Admin Panel',
+  try {
+    const payload = await getPayload({ config: await config })
+    const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+    return {
+      title: siteSettings.siteTitle?.trim() || 'Custom Site Title',
+      description:
+        siteSettings.siteDescription?.trim() || 'Set Site Title and Description in Admin Panel',
+    }
+  } catch (error) {
+    console.warn('Could not load site settings for metadata:', error.message)
+    return {
+      title: 'Custom Site Title',
+      description: 'Set Site Title and Description in Admin Panel',
+    }
   }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const payload = await getPayload({ config: await config })
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  let siteSettings: any = {}
+  let activities: any = { totalDocs: 0 }
+  let accommodations: any = { totalDocs: 0 }
+  let pages: any = { docs: [] }
+
+  try {
+    const payload = await getPayload({ config: await config })
+    siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+
+    // Fetch counts for Activities, Accommodations, and published Pages
+    const results = await Promise.all([
+      payload.find({ collection: 'activities', limit: 1 }).catch(() => ({ totalDocs: 0 })),
+      payload.find({ collection: 'accommodations', limit: 1 }).catch(() => ({ totalDocs: 0 })),
+      payload.find({
+        collection: 'pages',
+        where: { status: { equals: 'published' } },
+        limit: 10,
+      }).catch(() => ({ docs: [] })),
+    ])
+    
+    activities = results[0]
+    accommodations = results[1]
+    pages = results[2]
+  } catch (error) {
+    console.warn('Could not load site data for layout:', error.message)
+  }
+
   const siteTitle = siteSettings.siteTitle?.trim() || 'Custom Site Title'
   const siteDescription =
     siteSettings.siteDescription?.trim() || 'Set Site Title and Description in Admin Panel'
   const showSiteDescription = siteSettings.showSiteDescriptionInHeader ?? true
   const hideSiteTitleIfLogo = siteSettings.hideSiteTitleIfLogo ?? false
   const socialLinks = siteSettings.socialLinks || []
-
-  // Fetch counts for Activities, Accommodations, and published Pages
-  const [activities, accommodations, pages] = await Promise.all([
-    payload.find({ collection: 'activities', limit: 1 }),
-    payload.find({ collection: 'accommodations', limit: 1 }),
-    payload.find({
-      collection: 'pages',
-      where: { status: { equals: 'published' } },
-      limit: 10,
-    }),
-  ])
 
   // Build navLinks - only include if there are items in the collection
   const navLinks = [

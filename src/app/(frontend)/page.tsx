@@ -7,14 +7,21 @@ import AccommodationList from './(components)/AccommodationList'
 import '../globals.css'
 
 export default async function HomePage() {
-  // Initialize Payload with the config
-  const payload = await getPayload({ config: await config })
-  // Fetch the site settings global
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  let siteSettings: any = {}
+  
+  try {
+    // Initialize Payload with the config
+    const payload = await getPayload({ config: await config })
+    // Fetch the site settings global
+    siteSettings = await payload.findGlobal({ slug: 'site-settings' })
+  } catch (error) {
+    console.warn('Could not load site settings for homepage:', error.message)
+  }
+
   const {
-    homeHeroTitle,
-    homeHeroDescription,
-    homeHeroIntroText,
+    homeHeroTitle = 'Welcome to Our Site',
+    homeHeroDescription = 'Discover amazing experiences',
+    homeHeroIntroText = 'Explore our offerings and find what you\'re looking for.',
     homeActivitiesSection,
     homeAccommodationsSection,
     homeCallToActionSection,
