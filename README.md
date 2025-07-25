@@ -39,7 +39,9 @@ If you get stuck or just want someone to do all of the work for you, let me cust
 - **Admin Panel Access**: Easy access to Payload CMS admin interface via footer link for content management
 - **Sample Data Included**: Pre-built sample accommodations, activities, and pages to get started quickly
 - **TypeScript Ready**: Full TypeScript support with auto-generated types for type-safe development
-- **Database Flexibility**: SQLite for local development, easily configurable for PostgreSQL or MySQL in production
+- **Database Flexibility**: SQLite for local development, easily configurable for PostgreSQL in production
+- **Dynamic Email System**: Dual email configuration supporting both Payload's internal emails (password resets, user management) via environment variables and application emails (contact forms, bookings) via admin-configurable SMTP settings in Site Settings
+- **Contact Form API**: Ready-to-use contact form API endpoint (`/api/contact`) with email notifications and admin-configurable recipients
 
 ### Theme File Organization
 

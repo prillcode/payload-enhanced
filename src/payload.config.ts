@@ -2,9 +2,11 @@ import { buildConfig } from 'payload'
 import { sqliteAdapter } from '@payloadcms/db-sqlite' //used in local development
 import { postgresAdapter } from '@payloadcms/db-postgres' //used in production
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { nodemailerAdapter } from '@payloadcms/email-nodemailer'
 import { fileURLToPath } from 'url'
 import path from 'path'
 import sharp from 'sharp'
+import nodemailer from 'nodemailer'
 import SiteSettings from './globals/SiteSettings'
 import { s3Storage } from '@payloadcms/storage-s3'
 
@@ -36,6 +38,28 @@ const databaseAdapter = isPostgres
       },
     })
 
+// Email adapter - uses environment variables or falls back to console
+// For dynamic SMTP settings from SiteSettings, use the sendEmail function from src/lib/email.ts
+const emailAdapter = nodemailerAdapter({
+  defaultFromAddress: process.env.FROM_EMAIL || 'noreply@localhost',
+  defaultFromName: process.env.FROM_NAME || 'Your Site',
+  transport: process.env.SMTP_HOST
+    ? nodemailer.createTransport({
+        host: process.env.SMTP_HOST,
+        port: parseInt(process.env.SMTP_PORT || '587'),
+        secure: process.env.SMTP_PORT === '465',
+        auth: {
+          user: process.env.SMTP_USER,
+          pass: process.env.SMTP_PASSWORD,
+        },
+      })
+    : nodemailer.createTransport({
+        streamTransport: true,
+        newline: 'unix',
+        buffer: true,
+      }),
+})
+
 export default buildConfig({
   admin: {
     user: Users.slug,
@@ -48,6 +72,7 @@ export default buildConfig({
     outputFile: path.resolve(__dirname, 'payload-types.ts'),
   },
   db: databaseAdapter,
+  email: emailAdapter,
   cors: [
     'http://localhost:3000', // Your Dev server
     'http://localhost:3001', // Dev server - Alternative port

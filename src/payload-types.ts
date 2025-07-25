@@ -727,6 +727,36 @@ export interface SiteSetting {
     buttonLink: string;
   };
   contactEmail?: string | null;
+  emailSettings?: {
+    /**
+     * Email address from which emails will be sent.
+     */
+    fromEmail?: string | null;
+    /**
+     * Display name for outgoing emails (e.g., "Your Name or Business Name")
+     */
+    fromName?: string | null;
+    /**
+     * SMTP server hostname (e.g., smtp.gmail.com, smtp.mailgun.org)
+     */
+    smtpHost?: string | null;
+    /**
+     * SMTP port (587 for TLS, 465 for SSL, 25 for unencrypted)
+     */
+    smtpPort?: number | null;
+    /**
+     * SMTP authentication username (usually your email)
+     */
+    smtpUser?: string | null;
+    /**
+     * SMTP authentication password or app password
+     */
+    smtpPassword?: string | null;
+    /**
+     * Use secure connection (recommended)
+     */
+    enableTLS?: boolean | null;
+  };
   socialLinks?:
     | {
         platform: string;
@@ -789,6 +819,17 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         buttonLink?: T;
       };
   contactEmail?: T;
+  emailSettings?:
+    | T
+    | {
+        fromEmail?: T;
+        fromName?: T;
+        smtpHost?: T;
+        smtpPort?: T;
+        smtpUser?: T;
+        smtpPassword?: T;
+        enableTLS?: T;
+      };
   socialLinks?:
     | T
     | {

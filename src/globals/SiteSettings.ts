@@ -1,4 +1,77 @@
-import { GlobalConfig } from 'payload'
+import { GlobalConfig, GroupField } from 'payload'
+
+//custom object for nodemailer email settings that will be referenced by SiteSettings below.
+const emailSettings: GroupField = {
+  name: 'emailSettings',
+  label: 'Email Settings',
+  type: 'group',
+  fields: [
+    {
+      name: 'fromEmail',
+      label: 'From Email Address',
+      type: 'email',
+      required: false,
+      admin: {
+        description: 'Email address from which emails will be sent.',
+      },
+    },
+    {
+      name: 'fromName',
+      label: 'From Name',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'Display name for outgoing emails (e.g., "Your Name or Business Name")',
+      },
+    },
+    {
+      name: 'smtpHost',
+      label: 'SMTP Host',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'SMTP server hostname (e.g., smtp.gmail.com, smtp.mailgun.org)',
+      },
+    },
+    {
+      name: 'smtpPort',
+      label: 'SMTP Port',
+      type: 'number',
+      required: false,
+      defaultValue: 587,
+      admin: {
+        description: 'SMTP port (587 for TLS, 465 for SSL, 25 for unencrypted)',
+      },
+    },
+    {
+      name: 'smtpUser',
+      label: 'SMTP Username',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'SMTP authentication username (usually your email)',
+      },
+    },
+    {
+      name: 'smtpPassword',
+      label: 'SMTP Password',
+      type: 'text',
+      required: false,
+      admin: {
+        description: 'SMTP authentication password or app password',
+      },
+    },
+    {
+      name: 'enableTLS',
+      label: 'Enable TLS/SSL',
+      type: 'checkbox',
+      defaultValue: true,
+      admin: {
+        description: 'Use secure connection (recommended)',
+      },
+    },
+  ],
+}
 
 const SiteSettings: GlobalConfig = {
   slug: 'site-settings',
@@ -227,6 +300,8 @@ const SiteSettings: GlobalConfig = {
       type: 'email',
       required: false,
     },
+    //add emailSettings group here
+    emailSettings,
     {
       name: 'socialLinks',
       label: 'Social Links',
