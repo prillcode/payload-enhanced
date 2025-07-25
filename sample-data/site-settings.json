@@ -27,14 +27,14 @@
   "emailSettingsSmtpUser": "cab61b33a90961",
   "emailSettingsSmtpPassword": "aa607da83e0c5e",
   "emailSettingsEnableTLS": true,
-  "footerText": "© 2024 Great Outdoors. All rights reserved. | Connecting people with nature since 2012.",
+  "footerText": "© 2025 Great Outdoors. All rights reserved. | Connecting people with nature for generations.",
   "socialLinks": [
     {
       "platform": "facebook",
       "url": "https://facebook.com/greatoutdoors"
     },
     {
-      "platform": "instagram", 
+      "platform": "instagram",
       "url": "https://instagram.com/greatoutdoors"
     },
     {

@@ -65,10 +65,46 @@ When you modify collections or globals:
 
 ## Production Deployment
 
+### Coolify (Recommended)
+
+This template includes `nixpacks.toml` configuration for seamless Coolify deployments:
+
+**Before First Deployment:**
+```bash
+# Generate initial migration (CRITICAL STEP)
+pnpm payload migrate:create
+
+# Commit the migration files
+git add src/migrations/
+git commit -m "Add initial database migration"
+git push
+```
+
+**Coolify Configuration:**
+1. **Connect repository** to Coolify
+2. **Set environment variables**: `DATABASE_URI`, `PAYLOAD_SECRET`, etc.
+3. **Leave "Start Command" blank** - `nixpacks.toml` handles everything
+4. **Deploy** - Coolify automatically:
+   - Installs pnpm v9+ (resolves compatibility issues)
+   - Builds Next.js application
+   - Runs `pnpm payload migrate` before starting server
+   - Starts application on port 3000
+
+**Adding Sample Data (Optional):**
+After successful deployment, populate with sample content via Coolify Terminal:
+```bash
+pnpm seed
+```
+This adds sample accommodations, activities, pages, and site settings from `/sample-data` directory.
+
+### Other Platforms
+
 The `package.json` start script automatically runs migrations before starting:
 ```json
 "start": "payload migrate && next start"
 ```
+
+**Critical**: Always run `pnpm payload migrate:create` locally and commit migration files before deploying.
 
 This ensures:
 - ✅ Fresh deployments create all tables

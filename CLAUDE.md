@@ -64,15 +64,33 @@ src/app/
 - `src/payload.config.ts` - Payload CMS configuration
 - `src/collections/` - Collection schema definitions
 - `src/globals/SiteSettings.ts` - Global site settings
+- `nixpacks.toml` - Coolify deployment configuration (handles pnpm v9+ and automated migrations)
+- `docker-compose.yml` - Local PostgreSQL development database
 
 ## Development Workflow
 
+### Prerequisites
+- **Docker or Podman** - Required for running PostgreSQL database container
+- **Node.js & pnpm** - For running the Next.js application
+
+### Initial Setup
+1. Copy environment file: `cp .env.example .env`
+2. Start database: `docker compose up -d` (or `podman compose up -d`)
+3. Install dependencies: `pnpm install`
+4. Start development: `pnpm dev`
+
 ### Making Schema Changes
 1. Modify collection files in `src/collections/`
-2. Run `pnpm payload generate:types` to update TypeScript definitions
-3. Restart dev server to apply changes
-4. If conflicts occur, use `pnpm payload migrate:fresh` (destroys data)
-5. Re-seed with `pnpm seed` if needed
+2. Create migration: `pnpm payload migrate:create`
+3. Apply migration: `pnpm payload migrate`
+4. Run `pnpm payload generate:types` to update TypeScript definitions
+5. Restart dev server to apply changes
+6. **Important**: Always commit migration files in `src/migrations/` for production deployments
+
+### Fresh Database Setup (Development)
+If you need to start completely fresh:
+1. `pnpm payload migrate:fresh` (destroys all data)
+2. `pnpm seed` (optional - adds sample data)
 
 ### Frontend Development
 - Components use **Tailwind CSS** for styling
@@ -88,13 +106,16 @@ src/app/
 ## Database Configuration
 
 ### Local Development
-- Uses **SQLite** (`cms.db` file)
-- No additional database setup required
+- Uses **PostgreSQL** via Docker/Podman container
+- Start database: `docker compose up -d` (or `podman compose up -d`)
+- Database auto-created on first run or via `pnpm payload migrate`
 
 ### Production
-- Configure `DATABASE_URI` environment variable
-- Supports PostgreSQL, MySQL, or MongoDB
-- Use migration commands for schema changes
+- Configure `DATABASE_URI` environment variable for PostgreSQL
+- **Coolify deployments**: Migrations run automatically via `nixpacks.toml` configuration
+- **Other platforms**: Migrations run automatically via `pnpm start` command
+- Supports PostgreSQL (recommended), MySQL, or MongoDB
+- **Critical**: Ensure initial migration exists (`pnpm payload migrate:create`) before first deployment
 
 ## Important Notes
 

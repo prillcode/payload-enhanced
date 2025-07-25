@@ -77,11 +77,13 @@ export default buildConfig({
     'http://localhost:3000', // Your Dev server
     'http://localhost:3001', // Dev server - Alternative port
     'http://localhost:5173', // Vite dev server (if custom front-end app)
+    ...(process.env.PAYLOAD_PUBLIC_SERVER_URL ? [process.env.PAYLOAD_PUBLIC_SERVER_URL] : []),
   ],
   csrf: [
     'http://localhost:3000',
     'http://localhost:3001',
     'http://localhost:5173', // Vite dev server
+    ...(process.env.PAYLOAD_PUBLIC_SERVER_URL ? [process.env.PAYLOAD_PUBLIC_SERVER_URL] : []),
   ],
   sharp, // Add sharp for image processing
   plugins: [

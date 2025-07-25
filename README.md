@@ -256,9 +256,40 @@ Application emails (contact forms, booking notifications, newsletters) use dynam
 
 ## 🌐 Custom Webhost Deployment
 
-For deployment to a remote Node/NextJS server, there are several options including VPS deployments with Coolify, traditional hosting providers, or cloud platforms. For developers interested in Coolify deployments from GitHub repositories, feel free to consult with me for specific setup guidance.
+For deployment to a remote Node/NextJS server, there are several options including VPS deployments with Coolify, traditional hosting providers, or cloud platforms.
 
-General deployment steps (without Coolify or another Auto deployment dashboard):
+### Coolify Deployment (Recommended for VPS)
+
+This template includes a `nixpacks.toml` configuration file optimized for Coolify deployments:
+
+**Prerequisites:**
+1. **Create initial migration**: Before first deployment, run `pnpm payload migrate:create` locally to generate the initial database schema migration
+2. **Commit migration files**: Always commit the generated migration files in `src/migrations/` to your repository
+3. **PostgreSQL database**: Configure a PostgreSQL database in Coolify and set the `DATABASE_URI` environment variable
+
+**Deployment Process:**
+1. **Connect your GitHub repository** to Coolify
+2. **Set environment variables**: Configure `DATABASE_URI`, `PAYLOAD_SECRET`, and other required variables
+3. **Leave "Start Command" blank** - The `nixpacks.toml` file handles the complete build and deployment process
+4. **Deploy** - Coolify will automatically:
+   - Install pnpm v9+ (resolves Nixpacks compatibility issues)
+   - Build your Next.js application
+   - Run database migrations before starting the server
+   - Start your application on port 3000
+
+**Adding Sample Data (Optional):**
+After successful deployment, you can populate your database with sample content:
+1. **Access Coolify Terminal**: Use the "Terminal" tab for your deployed application
+2. **Run seed command**: `pnpm seed`
+3. **Verify content**: Check your admin panel to see sample accommodations, activities, and pages
+
+**Key Benefits:**
+- **Automated migrations**: Database schema is automatically applied before each deployment
+- **pnpm v9 support**: Resolves known Nixpacks compatibility issues with newer pnpm versions
+- **Version controlled**: All deployment configuration stays in your repository
+- **Zero-downtime**: Migrations run before the server starts, preventing empty database errors
+
+### General VPS/Traditional Hosting
 
 - **Database Configuration**: Update your production `.env` with your PostgreSQL connection details (development and production now use the same database technology)
 - **Environment Variables**: Update your production `.env` with your database URI (e.g., `DATABASE_URI=postgresql://username:password@host:port/database` or `DATABASE_URI=mysql://username:password@host:port/database`)
