@@ -261,6 +261,11 @@ General deployment steps (without Coolify or another Auto deployment dashboard):
 - **Database Setup**: Ensure your PostgreSQL or MariaDB database is created and accessible
 - **Start Application**: Use your hosting provider's process manager or run `pnpm start` to launch the application
 
+**Adding Sample Data (Optional):**
+- **Coolify users**: Access your project's **Terminal** tab and run `pnpm seed` to add sample accommodations, activities, and pages
+- **Other platforms**: SSH into your server and run `pnpm seed` from your application directory
+- **Note**: Only run seeding on fresh deployments or when you specifically want sample data
+
 **Database Options**: Most hosting providers support PostgreSQL, MySQL/MariaDB, or MongoDB - all work excellently with Payload CMS.
 
 ## ▲ Vercel or Netlify Deployment
