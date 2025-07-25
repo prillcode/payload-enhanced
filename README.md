@@ -21,9 +21,12 @@ If you get stuck or just want someone to do all of the work for you, let me cust
 - [Extended Walkthrough](#-extended-walkthrough)
   - [Payload CMS](#payload-cms)
   - [Default Payload Collections](#default-payload-collections)
+- [Email Configuration](#-email-configuration)
+  - [Internal Payload Emails (Environment Variables)](#internal-payload-emails-environment-variables)
+  - [Application Emails (Admin Configurable)](#application-emails-admin-configurable)
 - [Custom Webhost Deployment](#-custom-webhost-deployment)
-  - [Migrating Your Collection Data](#migrating-your-collection-data)
-- [Vercel Deployment](#-vercel-deployment)
+- [Vercel or Netlify Deployment](#-vercel-or-netlify-deployment)
+- [Migrating Your Collection Data](#-migrating-your-collection-data)
 - [Need Help?](#-need-help)
 - [Questions](#-questions)
 
@@ -258,22 +261,6 @@ General deployment steps (without Coolify or another Auto deployment dashboard):
 - **Database Setup**: Ensure your PostgreSQL or MariaDB database is created and accessible
 - **Start Application**: Use your hosting provider's process manager or run `pnpm start` to launch the application
 
-### Migrating Your Collection Data
-
-If you've been developing locally with SQLite and need to transfer your collection data to the production database:
-
-1. **Export your data from local SQLite**:
-   ```bash
-   pnpm payload export --output=./my-backup.json
-   ```
-2. **Upload the backup file** to your production server
-3. **Import data to your production database**:
-   ```bash
-   pnpm payload import --file=./my-backup.json
-   ```
-4. **Verify your data**: Log into the admin panel to ensure all collections were imported correctly
-5. **Note about media files!** The export/import process handles collection data, but you'll need to separately transfer media files from your local media directory to your production server's media storage.
-
 **Database Options**: Most hosting providers support PostgreSQL, MySQL/MariaDB, or MongoDB - all work excellently with Payload CMS.
 
 ## ▲ Vercel or Netlify Deployment
@@ -294,6 +281,22 @@ Serverless platforms like Vercel and Netlify offer convenient deployment with au
 - **Build Command**: Set to `pnpm build` in deploy settings if not auto-detected
 
 Note that Vercel's serverless environment works well with Payload CMS, but ensure your database provider supports connection pooling for optimal performance.
+
+## 📦 Migrating Your Collection Data
+
+If you've been developing locally with SQLite and need to transfer your collection data to the production database:
+
+1. **Export your data from local SQLite**:
+   ```bash
+   pnpm payload export --output=./my-backup.json
+   ```
+2. **Upload the backup file** to your production server
+3. **Import data to your production database**:
+   ```bash
+   pnpm payload import --file=./my-backup.json
+   ```
+4. **Verify your data**: Log into the admin panel to ensure all collections were imported correctly
+5. **Note about media files!** The export/import process handles collection data, but you'll need to separately transfer media files from your local media directory to your production server's media storage.
 
 ## 🆘 Need Help?
 
