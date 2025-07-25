@@ -106,20 +106,18 @@ export default async function AccommodationDetailPage({ params }: AccommodationP
             {/* Description */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-forest-800 mb-6">About This Place</h2>
-              
+
               {/* Short Description */}
               <div className="prose prose-lg max-w-none text-earth-700 mb-6">
                 <p>
-                  {accommodation.shortDescription 
+                  {accommodation.shortDescription
                     ? accommodation.shortDescription
                     : 'Experience comfort and tranquility in this beautiful accommodation nestled in nature.'}
                 </p>
               </div>
 
               {/* Additional Page Content (if provided) */}
-              {accommodation.pageContent && (
-                <LexicalRenderer content={accommodation.pageContent} />
-              )}
+              {accommodation.pageContent && <LexicalRenderer content={accommodation.pageContent} />}
             </section>
 
             {/* Property Details */}
@@ -292,8 +290,10 @@ export async function generateStaticParams() {
       slug: accommodation.slug,
     }))
   } catch (error) {
-    // During build, database might not be ready yet - return empty array
-    console.warn('Could not generate static params for accommodations:', error.message)
+    console.warn(
+      'Could not generate static params for accommodations:',
+      error instanceof Error ? error.message : String(error),
+    )
     return []
   }
 }
@@ -322,10 +322,9 @@ export async function generateMetadata({ params }: AccommodationPageProps) {
     }
   }
 
-  const description =
-    accommodation.shortDescription
-      ? accommodation.shortDescription
-      : `${accommodation.name} - a ${accommodation.rentalType} in ${accommodation.location?.city}`
+  const description = accommodation.shortDescription
+    ? accommodation.shortDescription
+    : `${accommodation.name} - a ${accommodation.rentalType} in ${accommodation.location?.city}`
 
   const location = accommodation.location
     ? `${accommodation.location.city}, ${accommodation.location.state}`

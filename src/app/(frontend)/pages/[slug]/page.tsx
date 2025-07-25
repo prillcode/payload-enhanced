@@ -127,7 +127,10 @@ export async function generateStaticParams() {
     }))
   } catch (error) {
     // During build, database might not be ready yet - return empty array
-    console.warn('Could not generate static params for pages:', error.message)
+    console.warn(
+      'Could not generate static params for pages:',
+      error instanceof Error ? error.message : String(error),
+    )
     return []
   }
 }

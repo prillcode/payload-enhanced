@@ -80,20 +80,18 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
             {/* Description */}
             <section className="mb-12">
               <h2 className="text-2xl font-bold text-forest-800 mb-6">About This Activity</h2>
-              
+
               {/* Short Description */}
               <div className="prose prose-lg max-w-none text-earth-700 mb-6">
                 <p>
-                  {activity.shortDescription 
+                  {activity.shortDescription
                     ? activity.shortDescription
                     : 'Join us for an exciting outdoor adventure experience that will create lasting memories.'}
                 </p>
               </div>
 
               {/* Additional Page Content (if provided) */}
-              {activity.pageContent && (
-                <LexicalRenderer content={activity.pageContent} />
-              )}
+              {activity.pageContent && <LexicalRenderer content={activity.pageContent} />}
             </section>
 
             {/* Location */}
@@ -257,8 +255,10 @@ export async function generateStaticParams() {
       slug: activity.slug,
     }))
   } catch (error) {
-    // During build, database might not be ready yet - return empty array
-    console.warn('Could not generate static params for activities:', error.message)
+    console.warn(
+      'Could not generate static params for activities:',
+      error instanceof Error ? error.message : String(error),
+    )
     return []
   }
 }
@@ -287,10 +287,9 @@ export async function generateMetadata({ params }: ActivityPageProps) {
     }
   }
 
-  const description =
-    activity.shortDescription
-      ? activity.shortDescription
-      : `${activity.name} - ${activity.activityType} at ${SITE_TITLE}.`
+  const description = activity.shortDescription
+    ? activity.shortDescription
+    : `${activity.name} - ${activity.activityType} at ${SITE_TITLE}.`
 
   return {
     title: `${activity.name} | Great Outdoors`,

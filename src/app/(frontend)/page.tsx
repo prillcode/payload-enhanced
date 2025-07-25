@@ -8,20 +8,23 @@ import '../globals.css'
 
 export default async function HomePage() {
   let siteSettings: any = {}
-  
+
   try {
     // Initialize Payload with the config
     const payload = await getPayload({ config: await config })
     // Fetch the site settings global
     siteSettings = await payload.findGlobal({ slug: 'site-settings' })
   } catch (error) {
-    console.warn('Could not load site settings for homepage:', error.message)
+    console.warn(
+      'Could not load site settings for homepage:',
+      error instanceof Error ? error.message : String(error),
+    )
   }
 
   const {
     homeHeroTitle = 'Welcome to Our Site',
     homeHeroDescription = 'Discover amazing experiences',
-    homeHeroIntroText = 'Explore our offerings and find what you\'re looking for.',
+    homeHeroIntroText = "Explore our offerings and find what you're looking for.",
     homeActivitiesSection,
     homeAccommodationsSection,
     homeCallToActionSection,
@@ -63,7 +66,7 @@ export default async function HomePage() {
         <section className="my-8">
           <div className="container mx-auto px-4">
             <div className="flex gap-4 overflow-x-auto">
-              {homePageSlider.slides.map((slide, idx) => {
+              {homePageSlider.slides.map((slide: any, idx: number) => {
                 // Type guard to check if image is a Media object
                 const imageObj = typeof slide.image === 'object' ? slide.image : null
                 return (
