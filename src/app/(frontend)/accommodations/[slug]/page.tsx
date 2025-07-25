@@ -280,8 +280,9 @@ export default async function AccommodationDetailPage({ params }: AccommodationP
 // Generate metadata for SEO
 export async function generateMetadata({ params }: AccommodationPageProps) {
   const payload = await getPayload({ config: await config })
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
-  const SITE_TITLE = siteSettings.siteTitle?.trim() || 'Custom Site Title'
+  const { getSafeMetadata } = await import('@/lib/siteSettings')
+  const metadata = await getSafeMetadata()
+  const SITE_TITLE = metadata.title
 
   const accommodationResponse = await payload.find({
     collection: 'accommodations',

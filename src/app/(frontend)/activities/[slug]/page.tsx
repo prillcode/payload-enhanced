@@ -245,8 +245,9 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ActivityPageProps) {
   const payload = await getPayload({ config: await config })
-  const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
-  const SITE_TITLE = siteSettings.siteTitle?.trim() || 'Custom Site Title'
+  const { getSafeMetadata } = await import('@/lib/siteSettings')
+  const metadata = await getSafeMetadata()
+  const SITE_TITLE = metadata.title
 
   const activityResponse = await payload.find({
     collection: 'activities',

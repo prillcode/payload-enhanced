@@ -5,21 +5,11 @@ import React from 'react'
 import ActivityList from './(components)/ActivityList'
 import AccommodationList from './(components)/AccommodationList'
 import '../globals.css'
+import { getSafeSettings } from '@/lib/siteSettings'
 
 export default async function HomePage() {
-  let siteSettings: any = {}
-
-  try {
-    // Initialize Payload with the config
-    const payload = await getPayload({ config: await config })
-    // Fetch the site settings global
-    siteSettings = await payload.findGlobal({ slug: 'site-settings' })
-  } catch (error) {
-    console.warn(
-      'Could not load site settings for homepage:',
-      error instanceof Error ? error.message : String(error),
-    )
-  }
+  // Get site settings with safe fallbacks
+  const siteSettings = await getSafeSettings()
 
   const {
     homeHeroTitle = 'Welcome to Our Site',

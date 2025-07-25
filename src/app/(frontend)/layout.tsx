@@ -5,34 +5,26 @@ import '../globals.css'
 import Link from 'next/link'
 import Header from './(components)/Header'
 import Footer from './(components)/Footer'
+import { getSafeMetadata, getSafeSettings } from '@/lib/siteSettings'
 
 export async function generateMetadata() {
-  try {
-    const payload = await getPayload({ config: await config })
-    const siteSettings = await payload.findGlobal({ slug: 'site-settings' })
-    return {
-      title: siteSettings.siteTitle?.trim() || 'Custom Site Title',
-      description:
-        siteSettings.siteDescription?.trim() || 'Set Site Title and Description in Admin Panel',
-    }
-  } catch (error) {
-    console.warn('Could not load site settings for metadata:', error instanceof Error ? error.message : String(error))
-    return {
-      title: 'Custom Site Title',
-      description: 'Set Site Title and Description in Admin Panel',
-    }
+  const metadata = await getSafeMetadata()
+  return {
+    title: metadata.title,
+    description: metadata.description,
   }
 }
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  let siteSettings: any = {}
   let activities: any = { totalDocs: 0 }
   let accommodations: any = { totalDocs: 0 }
   let pages: any = { docs: [] }
 
+  // Get site settings with safe fallbacks
+  const siteSettings = await getSafeSettings()
+
   try {
     const payload = await getPayload({ config: await config })
-    siteSettings = await payload.findGlobal({ slug: 'site-settings' })
 
     // Fetch counts for Activities, Accommodations, and published Pages
     const results = await Promise.all([
@@ -49,7 +41,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     accommodations = results[1]
     pages = results[2]
   } catch (error) {
-    console.warn('Could not load site data for layout:', error instanceof Error ? error.message : String(error))
+    console.warn('Could not load collection data for layout:', error instanceof Error ? error.message : String(error))
   }
 
   const siteTitle = siteSettings.siteTitle?.trim() || 'Custom Site Title'
