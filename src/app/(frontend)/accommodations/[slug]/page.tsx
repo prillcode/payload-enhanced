@@ -276,27 +276,6 @@ export default async function AccommodationDetailPage({ params }: AccommodationP
   )
 }
 
-// Generate static params for build optimization
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: await config })
-
-    const accommodations = await payload.find({
-      collection: 'accommodations',
-      limit: 1000,
-    })
-
-    return accommodations.docs.map((accommodation) => ({
-      slug: accommodation.slug,
-    }))
-  } catch (error) {
-    console.warn(
-      'Could not generate static params for accommodations:',
-      error instanceof Error ? error.message : String(error),
-    )
-    return []
-  }
-}
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: AccommodationPageProps) {

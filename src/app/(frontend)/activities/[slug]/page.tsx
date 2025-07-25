@@ -241,27 +241,6 @@ export default async function ActivityPage({ params }: ActivityPageProps) {
   )
 }
 
-// Generate static params for build optimization
-export async function generateStaticParams() {
-  try {
-    const payload = await getPayload({ config: await config })
-
-    const activities = await payload.find({
-      collection: 'activities',
-      limit: 1000,
-    })
-
-    return activities.docs.map((activity) => ({
-      slug: activity.slug,
-    }))
-  } catch (error) {
-    console.warn(
-      'Could not generate static params for activities:',
-      error instanceof Error ? error.message : String(error),
-    )
-    return []
-  }
-}
 
 // Generate metadata for SEO
 export async function generateMetadata({ params }: ActivityPageProps) {
