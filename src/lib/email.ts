@@ -1,5 +1,6 @@
 import nodemailer from 'nodemailer'
 import type { Payload } from 'payload'
+import type SMTPTransport from 'nodemailer/lib/smtp-transport'
 
 interface EmailOptions {
   to: string | string[]
@@ -17,18 +18,19 @@ export async function sendEmail(payload: Payload, options: EmailOptions) {
     // Check if SMTP settings are configured
     if (siteSettings?.emailSettings?.smtpHost && siteSettings?.emailSettings?.smtpUser) {
       // Create transport with dynamic settings
-      const transporter = nodemailer.createTransporter({
-        host: siteSettings.emailSettings.smtpHost,
+      const smtpOptions: SMTPTransport.Options = {
+        host: siteSettings.emailSettings.smtpHost || 'localhost',
         port: siteSettings.emailSettings.smtpPort || 587,
         secure: siteSettings.emailSettings.smtpPort === 465, // true for 465, false for other ports
         auth: {
-          user: siteSettings.emailSettings.smtpUser,
-          pass: siteSettings.emailSettings.smtpPassword,
+          user: siteSettings.emailSettings.smtpUser || '',
+          pass: siteSettings.emailSettings.smtpPassword || '',
         },
         tls: {
           rejectUnauthorized: siteSettings.emailSettings.enableTLS !== false,
         },
-      })
+      }
+      const transporter = nodemailer.createTransport(smtpOptions)
 
       // Prepare email message
       const mailOptions = {
@@ -60,11 +62,11 @@ export async function sendEmail(payload: Payload, options: EmailOptions) {
   }
 }
 
-// Hook for Payload to use our custom email service
+// Hook for Payload to use our custom email service (optional)
 export function createEmailHook() {
   return {
     // This hook will be called whenever Payload needs to send an email
-    beforeOperation: async ({ args, operation }) => {
+    beforeOperation: async ({ args, operation }: { args: any; operation: any }) => {
       // We can intercept email operations here if needed
       return args
     },

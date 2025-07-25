@@ -42,6 +42,7 @@ If you get stuck or just want someone to do all of the work for you, let me cust
 - **Database Flexibility**: SQLite for local development, easily configurable for PostgreSQL in production
 - **Dynamic Email System**: Dual email configuration supporting both Payload's internal emails (password resets, user management) via environment variables and application emails (contact forms, bookings) via admin-configurable SMTP settings in Site Settings
 - **Contact Form API**: Ready-to-use contact form API endpoint (`/api/contact`) with email notifications and admin-configurable recipients
+- **Email Testing**: Includes Mailtrap Sandbox configuration for safe email testing during development. For production, easily switch to any SMTP provider (Gmail, SendGrid, Mailgun, production Mailtrap, etc.)
 
 ### Theme File Organization
 
@@ -201,11 +202,55 @@ See the [Collections](https://payloadcms.com/docs/configuration/collections) doc
 
   This is the uploads enabled collection. It features pre-configured sizes, focal point and manual resizing to help you manage your pictures.
 
+## 📧 Email Configuration
+
+This template includes a comprehensive dual email system designed for both development testing and production use. The system separates Payload's internal emails (user management) from application emails (contact forms, notifications) for maximum flexibility.
+
+The email functionality is built on **nodemailer** and can be customized by modifying `src/lib/email.ts`. The template includes a working contact form API endpoint (`/api/contact`) that demonstrates the email system and serves as a foundation for building additional email-enabled features.
+
+### Internal Payload Emails (Environment Variables)
+
+Payload CMS uses these environment variables for system emails like password resets, user welcome emails, and admin notifications:
+
+**Configuration**: Set in your `.env` file:
+```env
+FROM_EMAIL=noreply@yoursite.com
+FROM_NAME=Your Site Name
+SMTP_HOST=sandbox.smtp.mailtrap.io  # Use Mailtrap for testing
+SMTP_PORT=587
+SMTP_USER=your-mailtrap-username
+SMTP_PASSWORD=your-mailtrap-password
+```
+
+**Development**: Uses Mailtrap Sandbox by default - emails are captured safely for testing without sending to real addresses.
+
+**Production**: Replace with your production SMTP provider (Gmail, SendGrid, Mailgun, production Mailtrap, etc.).
+
+### Application Emails (Admin Configurable)
+
+Application emails (contact forms, booking notifications, newsletters) use dynamically configurable SMTP settings that can be updated through the admin panel without requiring code changes or server restarts.
+
+**Configuration**: Admin Panel → Site Settings → Email Settings
+- SMTP Host, Port, Authentication
+- From Email Address and Display Name  
+- TLS/SSL Security Settings
+
+**Usage**: The custom `sendEmail()` function in `src/lib/email.ts` automatically reads these settings from the database each time an email is sent.
+
+**Example**: The included `/api/contact` endpoint demonstrates how to:
+- Send email notifications to admins
+- Send confirmation emails to users
+- Use the dynamic email configuration system
+
+**Custom Development**: Use the `sendEmail()` function in your API routes, server actions, or webhooks for any application email needs.
+
 ## 🌐 Custom Webhost Deployment
 
-For deployment to a remote Node/NextJS server (We use <a href="https://my.opalstack.com/signup/?via=CjbhWw" target="_blank" rel="noopener noreferrer">Opalstack</a>), follow these steps:
+For deployment to a remote Node/NextJS server, there are several options including VPS deployments with Coolify, traditional hosting providers, or cloud platforms. For developers interested in Coolify deployments from GitHub repositories, feel free to consult with me for specific setup guidance.
 
-- **Database Migration**: Switch from local SQLite to a production database by updating your `.env` file with either PostgreSQL or MariaDB connection details
+General deployment steps (without Coolify or another Auto deployment dashboard):
+
+- **Database Migration**: Switch from local SQLite to a production database by updating your `.env` file with either PostgreSQL (recommended) or MySQL/MariaDB connection details
 - **Environment Variables**: Update your production `.env` with your database URI (e.g., `DATABASE_URI=postgresql://username:password@host:port/database` or `DATABASE_URI=mysql://username:password@host:port/database`)
 - **Build Process**: Run `pnpm build` to create the production build
 - **File Upload**: Upload your built application files to your server
@@ -229,16 +274,24 @@ If you've been developing locally with SQLite and need to transfer your collecti
 4. **Verify your data**: Log into the admin panel to ensure all collections were imported correctly
 5. **Note about media files!** The export/import process handles collection data, but you'll need to separately transfer media files from your local media directory to your production server's media storage.
 
-**Opalstack Specific**: <a href="https://my.opalstack.com/signup/?via=CjbhWw" target="_blank" rel="noopener noreferrer">Opalstack</a> provides both PostgreSQL and MariaDB options. Choose based on your preference - both work excellently with Payload CMS.
+**Database Options**: Most hosting providers support PostgreSQL, MySQL/MariaDB, or MongoDB - all work excellently with Payload CMS.
 
-## ▲ Vercel Deployment
+## ▲ Vercel or Netlify Deployment
 
-For Vercel deployment:
+Serverless platforms like Vercel and Netlify offer convenient deployment with automatic GitHub integration, but can result in higher costs compared to VPS hosting due to serverless function usage, database egress fees, and bandwidth charges as your application scales.
 
-- **Database**: Connect to a cloud database service like PlanetScale (MySQL), Supabase (PostgreSQL), or MongoDB Atlas
-- **Environment Variables**: Add your production database URI and other environment variables in the Vercel dashboard
-- **Build Settings**: Vercel will automatically detect your Next.js application and configure build settings
-- **Deploy**: Connect your GitHub repository to Vercel for automatic deployments on push
+**Vercel Deployment:**
+- **Database**: Connect to a cloud database service like Supabase (PostgreSQL), PlanetScale (MySQL), or MongoDB Atlas
+- **Environment Variables**: Add your production database URI, email SMTP settings, and S3 credentials in the Vercel dashboard
+- **Build Settings**: Vercel automatically detects Next.js applications and configures build settings
+- **Deploy**: Connect your GitHub repository for automatic deployments on push
+- **Email Configuration**: Update environment variables with production SMTP provider settings
+
+**Netlify Deployment:**
+- **Functions**: Netlify automatically handles API routes as serverless functions
+- **Database**: Use external database providers (Supabase, PlanetScale, MongoDB Atlas)
+- **Environment Variables**: Configure in Netlify dashboard under Site Settings → Environment Variables
+- **Build Command**: Set to `pnpm build` in deploy settings if not auto-detected
 
 Note that Vercel's serverless environment works well with Payload CMS, but ensure your database provider supports connection pooling for optimal performance.
 
