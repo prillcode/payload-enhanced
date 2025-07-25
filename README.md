@@ -282,7 +282,30 @@ Serverless platforms like Vercel and Netlify offer convenient deployment with au
 
 Note that Vercel's serverless environment works well with Payload CMS, but ensure your database provider supports connection pooling for optimal performance.
 
-## 📦 Migrating Your Collection Data
+## 🔄 Development to Production Workflow
+
+This template is designed to seamlessly transition from local SQLite development to production PostgreSQL or MySQL databases. Here's how the workflow works:
+
+**Local Development (SQLite):**
+1. **Fresh start**: Clone the template with no migration files
+2. **Automatic schema creation**: Run `pnpm dev` and Payload automatically creates SQLite tables based on your collection definitions
+3. **Content creation**: Add accommodations, activities, and pages through the admin panel
+4. **Schema changes**: When you modify collections, restart the dev server and Payload auto-detects changes
+
+**Production Deployment (PostgreSQL/MySQL):**
+1. **Database setup**: Configure your production `DATABASE_URI` to point to PostgreSQL or MySQL
+2. **Automatic schema creation**: On first connection, Payload detects the empty production database and automatically creates the correct schema based on your collection definitions
+3. **No manual migrations needed**: The schema is generated fresh for the production database type
+4. **Data transfer**: Use the export/import process below to transfer your development content
+
+**Key Benefits:**
+- **Database flexibility**: Develop with SQLite, deploy with PostgreSQL/MySQL
+- **No migration conflicts**: Each database gets the appropriate schema automatically
+- **Seamless transition**: Your collection definitions work across all supported database types
+- **Type safety**: TypeScript types are generated from your collections, not your database
+- **S3 media continuity**: When using S3 storage (recommended), media files and references seamlessly work across both environments without any file transfers needed (set S3 config in .env file)
+
+### Migrating Your Collection Data
 
 If you've been developing locally with SQLite and need to transfer your collection data to the production database:
 
@@ -296,7 +319,9 @@ If you've been developing locally with SQLite and need to transfer your collecti
    pnpm payload import --file=./my-backup.json
    ```
 4. **Verify your data**: Log into the admin panel to ensure all collections were imported correctly
-5. **Note about media files!** The export/import process handles collection data, but you'll need to separately transfer media files from your local media directory to your production server's media storage.
+5. **Media files**: 
+   - **Using S3 storage (recommended)**: No additional steps needed! Media files and references work automatically across environments
+   - **Using local file storage**: You'll need to separately transfer media files from your local media directory to your production server's media storage
 
 ## 🆘 Need Help?
 
