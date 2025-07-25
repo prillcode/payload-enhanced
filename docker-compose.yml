@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: payload-postgres-dev
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: payload_dev
+      POSTGRES_USER: payload_user
+      POSTGRES_PASSWORD: dev_password_123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U payload_user -d payload_dev"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

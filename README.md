@@ -42,7 +42,7 @@ If you get stuck or just want someone to do all of the work for you, let me cust
 - **Admin Panel Access**: Easy access to Payload CMS admin interface via footer link for content management
 - **Sample Data Included**: Pre-built sample accommodations, activities, and pages to get started quickly
 - **TypeScript Ready**: Full TypeScript support with auto-generated types for type-safe development
-- **Database Flexibility**: SQLite for local development, easily configurable for PostgreSQL in production
+- **Database Flexibility**: PostgreSQL in Docker/Podman for development and production consistency. SQLite alternative available via DATABASE_URI configuration, though PostgreSQL is recommended for migration-safe development
 - **Dynamic Email System**: Dual email configuration supporting both Payload's internal emails (password resets, user management) via environment variables and application emails (contact forms, bookings) via admin-configurable SMTP settings in Site Settings
 - **Contact Form API**: Ready-to-use contact form API endpoint (`/api/contact`) with email notifications and admin-configurable recipients
 - **Email Testing**: Includes Mailtrap Sandbox configuration for safe email testing during development. For production, easily switch to any SMTP provider (Gmail, SendGrid, Mailgun, production Mailtrap, etc.)
@@ -80,6 +80,13 @@ public/
 
 ## 🚀 Quick Start - Local Setup
 
+### Prerequisites
+
+- **Docker or Podman**: Required for running the PostgreSQL database container
+  - Docker: Install from [docker.com](https://docker.com)
+  - Podman: Alternative container runtime, especially useful on Windows
+- **Node.js & pnpm**: For running the Next.js application
+
 ### Clone Repo or Use this Template
 
 You'll want to have standalone copy of this repo on your machine. You can either Clone the repo or Use this Template (recommended):
@@ -97,9 +104,9 @@ You'll want to have standalone copy of this repo on your machine. You can either
 ### Front-end Development
 
 1. Once you have the repo on your machine, follow the steps below.
-2. `cd my-project && cp .env.example .env` to copy the example environment variables. For local development, you will use SQLite which requires no additional database setup.
-
-3. `pnpm install && pnpm dev` to install dependencies and start the dev server
+2. `cd my-project && cp .env.example .env` to copy the example environment variables. 
+3. Start the PostgreSQL database: `docker compose up -d` (or `podman compose up -d` if using Podman)
+4. `pnpm install && pnpm dev` to install dependencies and start the dev server
 4. open `http://localhost:3000` to open the app in your browser
 
 That's it! Changes made in `./src` will be reflected in your app. 
@@ -110,12 +117,12 @@ Navigate to `https://localhost/admin` to access the Payload Admin panel and foll
 
 ## 📚 Extended Walkthrough
 
-**SQLite for Local Development**: By default, this template is configured to use SQLite for local development, which creates a local database file and requires no additional setup. This makes it perfect for getting started quickly without needing to configure a separate database server.
+**PostgreSQL for Development**: By default, this template uses PostgreSQL in a Docker/Podman container for local development. This matches production database technology, ensuring migration consistency and eliminating development-to-production database differences. While SQLite is available via DATABASE_URI configuration, PostgreSQL is recommended for a professional development workflow.
 
 ### Payload CMS
 
 1. When you run the dev server with `pnpm dev`, Payload reads your configuration from `src/payload.config.ts`, which defines:
-   - Database connection (SQLite for local development)
+   - Database connection (PostgreSQL via Docker/Podman for local development)
    - Default Collections (Payload defaults): Users, Media
    - Custom Collections (added by this Template): Accommodations, Activities, and Pages
    - Admin UI settings
@@ -147,7 +154,7 @@ Navigate to `https://localhost/admin` to access the Payload Admin panel and foll
    - Start by uploading some images to the Media collection
    - Then create Accommodations and Activities, referencing those media items
    - **Want sample data?** Run: ```pnpm seed``` to insert the accommodations, activities, and pages in the /sample-data directory of this template.
-   - All content you create is stored in your local SQLite database (`cms.db`)
+   - All content you create is stored in your PostgreSQL database container
    - This content will be immediately available to your frontend!
 
 5. Database Seeding and Migrations:
@@ -253,7 +260,7 @@ For deployment to a remote Node/NextJS server, there are several options includi
 
 General deployment steps (without Coolify or another Auto deployment dashboard):
 
-- **Database Migration**: Switch from local SQLite to a production database by updating your `.env` file with either PostgreSQL (recommended) or MySQL/MariaDB connection details
+- **Database Configuration**: Update your production `.env` with your PostgreSQL connection details (development and production now use the same database technology)
 - **Environment Variables**: Update your production `.env` with your database URI (e.g., `DATABASE_URI=postgresql://username:password@host:port/database` or `DATABASE_URI=mysql://username:password@host:port/database`)
 - **Build Process**: Run `pnpm build` to create the production build
 - **File Upload**: Upload your built application files to your server
@@ -289,32 +296,38 @@ Note that Vercel's serverless environment works well with Payload CMS, but ensur
 
 ## 🔄 Development to Production Workflow
 
-This template is designed to seamlessly transition from local SQLite development to production PostgreSQL or MySQL databases. Here's how the workflow works:
+This template uses PostgreSQL for both development and production environments, ensuring consistency and eliminating database-related deployment issues. Here's how the workflow works:
 
-**Local Development (SQLite):**
-1. **Fresh start**: Clone the template with no migration files
-2. **Automatic schema creation**: Run `pnpm dev` and Payload automatically creates SQLite tables based on your collection definitions
+**Local Development (PostgreSQL in Docker/Podman):**
+1. **Fresh start**: Clone the template and start the database container with `docker compose up -d`
+2. **Automatic schema creation**: Run `pnpm dev` and Payload automatically creates PostgreSQL tables based on your collection definitions
 3. **Content creation**: Add accommodations, activities, and pages through the admin panel
-4. **Schema changes**: When you modify collections, restart the dev server and Payload auto-detects changes
+4. **Schema changes**: When you modify collections, use migrations (`pnpm payload migrate:create` then `pnpm payload migrate`) for safe schema updates
 
-**Production Deployment (PostgreSQL/MySQL):**
-1. **Database setup**: Configure your production `DATABASE_URI` to point to PostgreSQL or MySQL
-2. **Automatic schema creation**: On first connection, Payload detects the empty production database and automatically creates the correct schema based on your collection definitions
-3. **No manual migrations needed**: The schema is generated fresh for the production database type
-4. **Data transfer**: Use the export/import process below to transfer your development content
+**Production Deployment (PostgreSQL):**
+1. **Database setup**: Configure your production `DATABASE_URI` to point to your production PostgreSQL database
+2. **Schema migration**: Use the same migration files from development to ensure identical schema structure
+3. **Data transfer**: Use the export/import process below to transfer your development content if needed
+4. **Consistent environment**: Development and production use the same database technology
 
 **Key Benefits:**
-- **Database flexibility**: Develop with SQLite, deploy with PostgreSQL/MySQL
-- **No migration conflicts**: Each database gets the appropriate schema automatically
-- **Seamless transition**: Your collection definitions work across all supported database types
+- **Database consistency**: Same PostgreSQL technology in development and production
+- **Migration safety**: Test schema changes locally before applying to production
+- **Professional workflow**: Matches industry-standard development practices
 - **Type safety**: TypeScript types are generated from your collections, not your database
 - **S3 media continuity**: When using S3 storage (recommended), media files and references seamlessly work across both environments without any file transfers needed (set S3 config in .env file)
 
+**Alternative: SQLite Option**
+If you prefer SQLite for rapid prototyping, change your `DATABASE_URI` in `.env` to a file path (e.g., `file:./cms.db`). However, this is only recommended for:
+- Quick demos or proof-of-concepts
+- Projects that will never need complex migrations
+- Single-developer projects with no production deployment plans
+
 ### Migrating Your Collection Data
 
-If you've been developing locally with SQLite and need to transfer your collection data to the production database:
+To transfer your collection data from development to production PostgreSQL databases:
 
-1. **Export your data from local SQLite**:
+1. **Export your data from local PostgreSQL**:
    ```bash
    pnpm payload export --output=./my-backup.json
    ```
