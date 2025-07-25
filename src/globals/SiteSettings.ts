@@ -157,11 +157,13 @@ const SiteSettings: GlobalConfig = {
           type: 'array',
           fields: [
             {
-              name: 'image',
-              label: 'Image',
-              type: 'upload',
-              relationTo: 'media', // relation to media collection slug
+              name: 'imageUrl',
+              label: 'Image URL',
+              type: 'text',
               required: true,
+              admin: {
+                description: 'Direct URL to the image (e.g., from your media uploads or external source)',
+              },
             },
             {
               name: 'caption',

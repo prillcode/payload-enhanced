@@ -692,7 +692,10 @@ export interface SiteSetting {
   homePageSlider?: {
     slides?:
       | {
-          image: number | Media;
+          /**
+           * Direct URL to the image (e.g., from your media uploads or external source)
+           */
+          imageUrl: string;
           caption?: string | null;
           id?: string | null;
         }[]
@@ -788,7 +791,7 @@ export interface SiteSettingsSelect<T extends boolean = true> {
         slides?:
           | T
           | {
-              image?: T;
+              imageUrl?: T;
               caption?: T;
               id?: T;
             };

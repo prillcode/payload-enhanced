@@ -57,14 +57,12 @@ export default async function HomePage() {
           <div className="container mx-auto px-4">
             <div className="flex gap-4 overflow-x-auto">
               {homePageSlider.slides.map((slide: any, idx: number) => {
-                // Type guard to check if image is a Media object
-                const imageObj = typeof slide.image === 'object' ? slide.image : null
                 return (
-                  <div key={imageObj?.id || idx} className="min-w-[300px] max-w-md flex-shrink-0">
+                  <div key={`slide-${idx}`} className="min-w-[300px] max-w-md flex-shrink-0">
                     <div className="aspect-[16/9] bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-                      {imageObj?.url && (
+                      {slide.imageUrl && (
                         <img
-                          src={imageObj.url}
+                          src={slide.imageUrl}
                           alt={slide.caption || `Slide ${idx + 1}`}
                           className="object-cover w-full h-full"
                         />
