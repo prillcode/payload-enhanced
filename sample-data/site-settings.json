@@ -20,6 +20,13 @@
   "homeCallToActionSectionButtonText": "Contact Us Today",
   "homeCallToActionSectionButtonLink": "/pages/contact",
   "contactEmail": "info@greatoutdoors.com",
+  "emailSettingsFromEmail": "noreply@your-payload-site.com",
+  "emailSettingsFromName": "Great Outdoors",
+  "emailSettingsSmtpHost": "sandbox.smtp.mailtrap.io",
+  "emailSettingsSmtpPort": 587,
+  "emailSettingsSmtpUser": "cab61b33a90961",
+  "emailSettingsSmtpPassword": "aa607da83e0c5e",
+  "emailSettingsEnableTLS": true,
   "footerText": "© 2024 Great Outdoors. All rights reserved. | Connecting people with nature since 2012.",
   "socialLinks": [
     {

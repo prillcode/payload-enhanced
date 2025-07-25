@@ -689,18 +689,6 @@ export interface SiteSetting {
   homeHeroTitle: string;
   homeHeroDescription?: string | null;
   homeHeroIntroText?: string | null;
-  homePageSlider?: {
-    slides?:
-      | {
-          /**
-           * Direct URL to the image (e.g., from your media uploads or external source)
-           */
-          imageUrl: string;
-          caption?: string | null;
-          id?: string | null;
-        }[]
-      | null;
-  };
   homeActivitiesSection: {
     /**
      * Toggle to show or hide this section on the homepage
@@ -785,17 +773,6 @@ export interface SiteSettingsSelect<T extends boolean = true> {
   homeHeroTitle?: T;
   homeHeroDescription?: T;
   homeHeroIntroText?: T;
-  homePageSlider?:
-    | T
-    | {
-        slides?:
-          | T
-          | {
-              imageUrl?: T;
-              caption?: T;
-              id?: T;
-            };
-      };
   homeActivitiesSection?:
     | T
     | {

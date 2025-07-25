@@ -147,35 +147,6 @@ const SiteSettings: GlobalConfig = {
         'NOTE: Customize the Hero content in the Admin Panel. Ex: Welcome to Great Outdoors, where adventure meets comfort in the heart of nature. We connect people with unforgettable outdoor experiences...',
     },
     {
-      name: 'homePageSlider',
-      label: 'Home Page Slider',
-      type: 'group',
-      fields: [
-        {
-          name: 'slides',
-          label: 'Slides',
-          type: 'array',
-          fields: [
-            {
-              name: 'imageUrl',
-              label: 'Image URL',
-              type: 'text',
-              required: true,
-              admin: {
-                description: 'Direct URL to the image (e.g., from your media uploads or external source)',
-              },
-            },
-            {
-              name: 'caption',
-              label: 'Caption',
-              type: 'text',
-              required: false,
-            },
-          ],
-        },
-      ],
-    },
-    {
       name: 'homeActivitiesSection',
       label: 'Home Activities Section',
       type: 'group',

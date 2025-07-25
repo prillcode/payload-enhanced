@@ -18,7 +18,6 @@ export default async function HomePage() {
     homeActivitiesSection,
     homeAccommodationsSection,
     homeCallToActionSection,
-    homePageSlider,
   } = siteSettings
 
   return (
@@ -52,32 +51,6 @@ export default async function HomePage() {
           </p>
         </div>
       </section>
-      {homePageSlider?.slides && homePageSlider.slides.length > 0 && (
-        <section className="my-8">
-          <div className="container mx-auto px-4">
-            <div className="flex gap-4 overflow-x-auto">
-              {homePageSlider.slides.map((slide: any, idx: number) => {
-                return (
-                  <div key={`slide-${idx}`} className="min-w-[300px] max-w-md flex-shrink-0">
-                    <div className="aspect-[16/9] bg-gray-100 rounded overflow-hidden flex items-center justify-center">
-                      {slide.imageUrl && (
-                        <img
-                          src={slide.imageUrl}
-                          alt={slide.caption || `Slide ${idx + 1}`}
-                          className="object-cover w-full h-full"
-                        />
-                      )}
-                    </div>
-                    {slide.caption && (
-                      <div className="text-center text-sm mt-2 text-gray-700">{slide.caption}</div>
-                    )}
-                  </div>
-                )
-              })}
-            </div>
-          </div>
-        </section>
-      )}
 
       {/* Activities Section (dynamic) */}
       {homeActivitiesSection?.displaySection && (

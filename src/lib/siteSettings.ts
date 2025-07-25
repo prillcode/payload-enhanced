@@ -11,9 +11,6 @@ const DEFAULT_SITE_SETTINGS = {
   homeHeroTitle: 'Explore the Great Outdoors',
   homeHeroDescription: 'Discover peaceful retreats and thrilling adventures in the heart of nature.',
   homeHeroIntroText: 'NOTE: Customize the Hero content in the Admin Panel. Ex: Welcome to Great Outdoors, where adventure meets comfort in the heart of nature. We connect people with unforgettable outdoor experiences...',
-  homePageSlider: { 
-    slides: [] // Array of { imageUrl: string, caption?: string }
-  },
   homeActivitiesSection: {
     displaySection: true,
     title: 'Popular Activities',
