@@ -64,22 +64,28 @@ export async function getSafeSettings() {
 /**
  * Safely fetches only the basic site settings needed for metadata
  * This is optimized for generateMetadata functions that only need title/description
+ * Uses basic string fields only to avoid complex array/group queries during build
  */
 export async function getSafeMetadata() {
   try {
     const payload = await getPayload({ config: await config })
-    const siteSettings = await payload.findGlobal({ 
+    // Use a simpler query that doesn't involve complex joins for arrays/groups
+    const result = await payload.db.findGlobal({
       slug: 'site-settings',
-      // Only fetch the fields we need for metadata to reduce load
       select: {
         siteTitle: true,
         siteDescription: true,
       }
     })
-    return {
-      title: siteSettings.siteTitle?.trim() || DEFAULT_SITE_SETTINGS.siteTitle,
-      description: siteSettings.siteDescription?.trim() || DEFAULT_SITE_SETTINGS.siteDescription,
+    
+    if (result) {
+      return {
+        title: result.siteTitle?.trim() || DEFAULT_SITE_SETTINGS.siteTitle,
+        description: result.siteDescription?.trim() || DEFAULT_SITE_SETTINGS.siteDescription,
+      }
     }
+    
+    throw new Error('No site settings found')
   } catch (error) {
     console.warn('Could not load site settings for metadata, using defaults:', error instanceof Error ? error.message : String(error))
     return {

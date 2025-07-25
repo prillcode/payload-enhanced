@@ -66,7 +66,7 @@ export async function sendEmail(payload: Payload, options: EmailOptions) {
 export function createEmailHook() {
   return {
     // This hook will be called whenever Payload needs to send an email
-    beforeOperation: async ({ args, operation }: { args: any; operation: any }) => {
+    beforeOperation: async ({ args, operation: _operation }: { args: any; operation: any }) => {
       // We can intercept email operations here if needed
       return args
     },
