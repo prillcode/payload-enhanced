@@ -16,14 +16,14 @@ const __dirname = path.dirname(fileURLToPath(import.meta.url))
 const collectionsPath = path.resolve(__dirname, '../src/collections')
 
 // Dynamic imports for collections
-const Users = (await import(`${collectionsPath}/Users.js`)).default
-const Media = (await import(`${collectionsPath}/Media.js`)).default  
-const Accommodations = (await import(`${collectionsPath}/Accommodations.js`)).default
-const Activities = (await import(`${collectionsPath}/Activities.js`)).default
-const Pages = (await import(`${collectionsPath}/Pages.js`)).Pages
+const Users = (await import(`${collectionsPath}/Users.ts`)).default
+const Media = (await import(`${collectionsPath}/Media.ts`)).default  
+const Accommodations = (await import(`${collectionsPath}/Accommodations.ts`)).default
+const Activities = (await import(`${collectionsPath}/Activities.ts`)).default
+const Pages = (await import(`${collectionsPath}/Pages.ts`)).Pages
 
 // Import globals
-const SiteSettings = (await import(path.resolve(__dirname, '../src/globals/SiteSettings.js'))).default
+const SiteSettings = (await import(path.resolve(__dirname, '../src/globals/SiteSettings.ts'))).default
 
 // PostgreSQL adapter for production
 const databaseAdapter = postgresAdapter({
