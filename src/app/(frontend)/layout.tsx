@@ -7,6 +7,9 @@ import Header from './(components)/Header'
 import Footer from './(components)/Footer'
 import { getSafeMetadata, getSafeSettings } from '@/lib/siteSettings'
 
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic'
+
 export async function generateMetadata() {
   const metadata = await getSafeMetadata()
   return {

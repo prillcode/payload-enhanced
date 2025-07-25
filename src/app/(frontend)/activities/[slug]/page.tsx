@@ -7,6 +7,9 @@ import config from '@/payload.config'
 import Hero from '../../(components)/Hero'
 import LexicalRenderer from '../../(components)/LexicalRenderer'
 
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic'
+
 interface ActivityPageProps {
   params: Promise<{ slug: string }>
 }

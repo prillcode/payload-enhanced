@@ -7,6 +7,9 @@ import AccommodationList from './(components)/AccommodationList'
 import '../globals.css'
 import { getSafeSettings } from '@/lib/siteSettings'
 
+// Force dynamic rendering to avoid static generation issues
+export const dynamic = 'force-dynamic'
+
 export default async function HomePage() {
   // Get site settings with safe fallbacks
   const siteSettings = await getSafeSettings()
